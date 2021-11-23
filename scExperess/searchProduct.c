@@ -73,14 +73,29 @@ void Website_ranking(int* total ,int* count)
 
 void Low_to_high(Product* list,int size)
 {
-    int sn[size] ,i ,big = 0 ,x;
+    int i ,temp = 0 ,j;
     
-    for(i = 0; i < size; i++)
+    if(size == 0)
     {
-        if(list[i].price > big)
-        {
-            big = list[i].price;
-        }
+        printf("eror");
+        return;
     }
     
+    
+    for(i = 0; i < size - 1; i++)
+    {
+        for(j = 0; i < size - 1; j++)
+        {
+            if(list[j].price > list[j + 1].price)
+            {
+                temp = list[j].price;
+                list[j].price = list[j + 1].price;
+                list[j + 1].price = temp;
+            }
+        }
+    }
+    for(i = 0; i < size ; i++)
+    {
+        Print_Product(list[i]);
+    }
 }
