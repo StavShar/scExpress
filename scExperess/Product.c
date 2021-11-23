@@ -17,7 +17,7 @@ Product* Get_All_Data(Product* list, int* size)
 {
 	FILE* fr;
 	char line[500];
-	char* sp, * name;
+	char* sp, * name, * category;
 	int sn, quantity, Discount;
 	float price;
 
@@ -38,6 +38,14 @@ Product* Get_All_Data(Product* list, int* size)
 		}
 		strcpy(name, sp);
 		sp = strtok(NULL, ",");
+		category = (char*)malloc((strlen(sp) + 1) * sizeof(char));
+		if (category == NULL)
+		{
+			printf("Allocate memory failed.\n");
+			exit(1);
+		}
+		strcpy(category, sp);
+		sp = strtok(NULL, ",");
 		sn = atoi(sp);
 		sp = strtok(NULL, ",");
 		quantity = atoi(sp);
@@ -45,7 +53,7 @@ Product* Get_All_Data(Product* list, int* size)
 		price = atof(sp);
 		sp = strtok(NULL, ",");
 		Discount = atoi(sp);
-		list = Add_Product(list, size, Create_Product(name, sn, quantity, price, Discount));//adding to list
+		list = Add_Product(list, size, Create_Product(name, category, sn, quantity, price, Discount));//adding to list
 	}
 	fclose(fr);//close file
 	return list;
@@ -63,7 +71,7 @@ void set_All_Data(Product* list, int size)
 		exit(1);
 	}
 	for (int i = 0; i < size; i++)
-		fprintf(fw, "%s,%d,%d,%f,%d\n", list[i].name, list[i].sn, list[i].quantity, list[i].price, list[i].discount);
+		fprintf(fw, "%s,%s,%d,%d,%f,%d\n", list[i].name, list[i].category, list[i].sn, list[i].quantity, list[i].price, list[i].discount);
 	fclose(fw);//close file
 }
 
@@ -115,9 +123,21 @@ Product New_Product()
 	if (p.name == NULL)
 	{
 		printf("Allocate memory failed.\n");
-		return Empty_Product();
+		exit(1);
 	}
 	strcpy(p.name, str);
+
+	//get category
+	printf("Enter category of product: ");
+	getchar();
+	gets(str);
+	p.category = (char*)malloc((strlen(str) + 1) * sizeof(char));
+	if (p.category == NULL)
+	{
+		printf("Allocate memory failed.\n");
+		exit(1);
+	}
+	strcpy(p.category, str);
 
 	//get quantity
 	printf("Enter quantity: ");
@@ -146,7 +166,7 @@ Product New_Product()
 }
 
 //create and return product object
-Product Create_Product(char* name, int sn, int quantity, float price, int Discount)
+Product Create_Product(char* name,char* category, int sn, int quantity, float price, int Discount)
 {
 	Product p;
 	p.name = (char*)malloc((strlen(name) + 1) * sizeof(char));
@@ -156,6 +176,13 @@ Product Create_Product(char* name, int sn, int quantity, float price, int Discou
 		exit(1);
 	}
 	strcpy(p.name, name);
+	p.category = (char*)malloc((strlen(category) + 1) * sizeof(char));
+	if (p.category == NULL)
+	{
+		printf("Allocate memory failed.\n");
+		exit(1);
+	}
+	strcpy(p.category, category);
 	p.sn = sn;
 	p.quantity = quantity;
 	p.price = price;
@@ -190,6 +217,13 @@ Product* Add_Product(Product* list, int* size, Product p)
 				exit(1);
 			}
 			strcpy(newlist[i].name, list[i].name);
+			newlist[i].category = (char*)malloc((strlen(list[i].category) + 1) * sizeof(char));
+			if (newlist[i].category == NULL)
+			{
+				printf("Allocate memory failed.\n");
+				exit(1);
+			}
+			strcpy(newlist[i].category, list[i].category);
 			newlist[i].discount = list[i].discount;
 			newlist[i].price = list[i].price;
 			newlist[i].quantity = list[i].quantity;
@@ -204,6 +238,13 @@ Product* Add_Product(Product* list, int* size, Product p)
 			exit(1);
 		}
 		strcpy(newlist[*size].name, p.name);
+		newlist[*size].category = (char*)malloc((strlen(p.category) + 1) * sizeof(char));
+		if (newlist[*size].category == NULL)
+		{
+			printf("Allocate memory failed.\n");
+			exit(1);
+		}
+		strcpy(newlist[*size].category, p.category);
 		newlist[*size].discount = p.discount;
 		newlist[*size].price = p.price;
 		newlist[*size].quantity = p.quantity;
@@ -211,7 +252,10 @@ Product* Add_Product(Product* list, int* size, Product p)
 		(*size)++;
 		//delete old list
 		for (int i = 0; i < *size - 1; i++)
+		{
 			free(list[i].name);
+			free(list[i].category);
+		}
 		free(list);
 		return newlist;
 	}
@@ -256,6 +300,13 @@ Product* Remove_Product(Product* list, int* size, int sn)
 					exit(1);
 				}
 				strcpy(newlist[i].name, list[*size - 1].name);
+				newlist[i].category = (char*)malloc((strlen(list[*size - 1].category) + 1) * sizeof(char));
+				if (newlist[i].category == NULL)
+				{
+					printf("Allocate memory failed.\n");
+					exit(1);
+				}
+				strcpy(newlist[i].category, list[*size - 1].category);
 				newlist[i].discount = list[*size - 1].discount;
 				newlist[i].price = list[*size - 1].price;
 				newlist[i].quantity = list[*size - 1].quantity;
@@ -269,7 +320,14 @@ Product* Remove_Product(Product* list, int* size, int sn)
 					printf("Allocate memory failed.\n");
 					exit(1);
 				}
-				strcpy(newlist[i].name, list[i].name);
+				strcpy(newlist[i].category, list[i].category);
+				newlist[i].category = (char*)malloc((strlen(list[i].category) + 1) * sizeof(char));
+				if (newlist[i].category == NULL)
+				{
+					printf("Allocate memory failed.\n");
+					exit(1);
+				}
+				strcpy(newlist[i].category, list[i].category);
 				newlist[i].discount = list[i].discount;
 				newlist[i].price = list[i].price;
 				newlist[i].quantity = list[i].quantity;
@@ -279,7 +337,10 @@ Product* Remove_Product(Product* list, int* size, int sn)
 		(*size)--;
 		//delete old list
 		for (int i = 0; i < *size + 1; i++)
+		{
 			free(list[i].name);
+			free(list[i].category);
+		}
 		free(list);
 		return newlist;
 	}
@@ -345,7 +406,7 @@ void Update_Quantity(Product* list, int size, int sn)
 //print all details of a product
 void Print_Product(const Product p)
 {
-	printf("Name: %s\nSerial number: %d\nQuantity: %d\n", p.name, p.sn, p.quantity);
+	printf("Name: %s\nCategory: %s\nSerial number: %d\nQuantity: %d\n", p.name, p.category, p.sn, p.quantity);
 	printf("Price: %f\n", Get_Price(p));
 }
 

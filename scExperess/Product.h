@@ -11,6 +11,7 @@
 typedef struct
 {
 	char* name;
+	char* category;
 	int sn;//serial number
 	int quantity;
 	float price;
@@ -26,7 +27,7 @@ int Get_New_Product_SN();//get the next serial number
 ////////////ACTION ON PRODUCTS////////////
 
 Product New_Product();//creating new product
-Product Create_Product(char* name, int sn, int quantity, float price, int Discount);//create and return product object
+Product Create_Product(char* name, char* category, int sn, int quantity, float price, int Discount);//create and return product object
 Product* Add_Product(Product* list, int* size, Product p);//add a new product to the list
 Product* Remove_Product(Product* list, int* size, int sn);//remove a product from the list
 int Get_Index_Of_Product(Product* list, int size, int sn);//return TRUE if product is exist, FALASE if not
