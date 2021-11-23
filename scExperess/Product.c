@@ -56,7 +56,7 @@ void set_All_Data(Product* list, int size)
 {
 	FILE* fw;
 
-	fw = fopen("Products2.csv", "w");//open file for reading
+	fw = fopen("Products2.csv", "w");//open file for writing
 	if (fw == NULL)
 	{
 		printf("Error!! file can't be opened\n");
@@ -168,7 +168,10 @@ Product* Add_Product(Product* list, int* size, Product p)
 {
 	Product* newlist = NULL;
 	if (p.name == "empty")//product is illegal
+	{
 		printf("Error! Product can't be added.\n");
+		return list;
+	}
 	else//product is legal
 	{
 		newlist = (Product*)malloc((*size + 1) * sizeof(Product));
