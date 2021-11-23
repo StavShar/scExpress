@@ -9,16 +9,20 @@
 typedef struct
 {
 	char name[30];
-	int quantity;
+	int sn;
+	int amount;
 	float price;
 
-}Product;
+}ProductFile;
 
 typedef struct
 {
 	char* username;
 	int id;
-	Product* items;
+	float tp;
+	char status;
+
+	ProductFile* items;
 }order;
 
-void orderHistory(FILE* HisOr, char id[9], Product order[N], int items);
+
