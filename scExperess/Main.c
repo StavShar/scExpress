@@ -1,7 +1,10 @@
 #include <stdio.h>
+#include "Test.h"
 
 int main()
 {
-	printf("ddd");
+	test();
 	//dd
+
+	return;
 }
