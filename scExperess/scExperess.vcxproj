@@ -21,13 +21,13 @@
   <ItemGroup>
     <ClCompile Include="Main.c" />
     <ClCompile Include="Orders_user.c" />
+    <ClCompile Include="Product.c" />
     <ClCompile Include="searchProduct.c" />
-    <ClCompile Include="Test.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Orders_user.h" />
+    <ClInclude Include="Product.h" />
     <ClInclude Include="searchProduct.h" />
-    <ClInclude Include="Test.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
