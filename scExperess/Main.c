@@ -2,5 +2,6 @@
 
 int main()
 {
-	///dd
+	printf("ddd");
+	//dd
 }
