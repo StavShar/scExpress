@@ -109,45 +109,66 @@ Cart Remove_From_Cart(Cart clist, int* scart, int sn)
 	}
 }
 
-//buying all products in cart
-Cart Checkout(Product* plist, int slist, Cart clist, int scart)/////////////////////////////////////whiles for wrong input 
+//calculating delivery price
+Cart Calculate_Delivery(Cart clist)
 {
-	char selection;
 	int delivery, delFLAG = 1;
-	printf("Are you sure you want to buy this cart? (y/n)\n");
-	scanf("%c", &selection);
-	if (selection == 'y' || selection == 'Y')
+	while (delFLAG)
 	{
-		printf("Are you looking for delivery service? (y/n)\n");
-		scanf("%c", &selection);
-		if (selection == 'y' || selection == 'Y')
+		printf("1 - North (%fnis)\n2 - Central (%fnis)\n3 - South (%fnis)\n4 - Back\n", NORTH, CENTRAL, SOUTH);
+		scanf("%d", &delivery);
+		if (delivery == 1)
 		{
-			while (delFLAG)
+			clist.tp += NORTH;
+			delFLAG = 0;
+		}
+		else if (delivery == 2)
+		{
+			clist.tp += CENTRAL;
+			delFLAG = 0;
+		}
+		else if (delivery == 3)
+		{
+			clist.tp += SOUTH;
+			delFLAG = 0;
+		}
+		else if (delivery == 4)
+		{
+			delFLAG = 0;
+		}
+		else
+			printf("Wrong number, try again.\n");
+		return clist;
+	}
+}
+
+//buying all products in cart - transporting the data into productFile array
+ProductFile* Checkout(Product* plist, int slist, Cart clist, int scart)
+{
+	int index;
+	ProductFile* newlist;
+	newlist = (ProductFile*)malloc(scart * sizeof(ProductFile));
+	if (newlist == NULL)
+	{
+		printf("Allocate memory failed.\n");
+		exit(1);
+	}
+	for (int i = 0; i < scart; i++)
+	{
+		index = Get_Index_Of_Product(plist, slist, clist.sn[i]);
+		if (index != ERROR)
+		{
+			newlist[i].name = (char*)malloc(strlen(plist[index].name + 1) * sizeof(char));
+			if (newlist[i].name == NULL)
 			{
-				printf("1 - North (%fnis)\n2 - Central (%fnis)\n3 - South (%fnis)\n4 - Back\n", NORTH, CENTRAL, SOUTH);
-				scanf("%d", &delivery);
-				if (delivery == 1)
-				{
-					clist.tp += NORTH;
-					delFLAG = 0;
-				}
-				else if (delivery == 2)
-				{
-					clist.tp += CENTRAL;
-					delFLAG = 0;
-				}
-				else if (delivery == 3)
-				{
-					clist.tp += SOUTH;
-					delFLAG = 0;
-				}
-				else if (delivery == 4)
-				{
-					delFLAG = 0;
-				}
-				else
-					printf("Wrong number, try again.\n");
+				printf("Allocate memory failed.\n");
+				exit(1);
 			}
+			strcpy(newlist[i].name, plist[index].name);
+			newlist[i].sn = clist.sn[i];
+			newlist[i].amount = clist.amount[i];
+			newlist[i].price = (clist.amount[i] * Get_Price(plist[index]));
 		}
 	}
+	return newlist;
 }
