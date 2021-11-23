@@ -19,12 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Cart.c" />
     <ClCompile Include="Main.c" />
     <ClCompile Include="Orders_user.c" />
     <ClCompile Include="Product.c" />
     <ClCompile Include="searchProduct.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cart.h" />
     <ClInclude Include="Orders_user.h" />
     <ClInclude Include="Product.h" />
     <ClInclude Include="searchProduct.h" />
