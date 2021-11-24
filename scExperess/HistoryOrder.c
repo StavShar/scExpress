@@ -9,6 +9,7 @@ void orderHistory(int id, ProductFile* order, int items)
 	FILE* HisOr;
 	char filename[50];
 	int i;
+	float tp = 0;
 	sprintf(filename, "%d.csv", id);
 	HisOr = fopen(filename, "a");
 	if (!HisOr)
@@ -22,8 +23,8 @@ void orderHistory(int id, ProductFile* order, int items)
 	for (i = 0; i < items; i++)
 	{
 		fprintf(HisOr, "%s,%d,%d,%.3f\n", order[i].name, order[i].sn, order[i].amount, order[i].price);
-
-
+		tp += order[i].price;
 	}
+	fprintf(HisOr, "Total:,%f", tp);
 	fclose(HisOr);
 }

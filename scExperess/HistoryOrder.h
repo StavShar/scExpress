@@ -4,6 +4,7 @@ typedef struct
 	int sn;
 	int amount;
 	float price;
+	char status;
 
 }ProductFile;
 
