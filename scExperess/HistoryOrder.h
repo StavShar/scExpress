@@ -4,19 +4,18 @@ typedef struct
 	int sn;
 	int amount;
 	float price;
-	char status;
-
 }ProductFile;
 
 typedef struct
 {
 	char* username;
 	int id;
+	char status;
 	ProductFile* items;
 }orders;
 
-void orderHistory(int id, ProductFile* order, int items);
-
+void orderHistory(int id, ProductFile* order, int items, char status);
+//status shloud get if the order is approved or not 
 int main()
 {
 	ProductFile* order;
@@ -37,10 +36,8 @@ int main()
 		scanf("%d", &order[i].amount);
 		scanf("%f", &order[i].price);
 	}
-
 	orderHistory(id, order, items);
-
+	free(order);
 	return 0;
-
 }
 
