@@ -18,24 +18,48 @@
     <ClCompile Include="Main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Test.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Orders_user.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="searchProduct.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Product.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cart.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HistoryOrder.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConfrimOrCancel.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager_Func.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Test.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Orders_user.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="searchProduct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Product.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HistoryOrder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConfrimOrCancel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager_func.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
