@@ -30,6 +30,9 @@
     <ClCompile Include="Cart.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HistoryOrder.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Orders_user.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Cart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HistoryOrder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
