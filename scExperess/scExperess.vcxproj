@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cart.c" />
+    <ClCompile Include="ConfrimOrCancel.c" />
     <ClCompile Include="HistoryOrder.c" />
     <ClCompile Include="Main.c" />
     <ClCompile Include="Orders_user.c" />
@@ -28,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cart.h" />
+    <ClInclude Include="ConfrimOrCancel.h" />
     <ClInclude Include="HistoryOrder.h" />
     <ClInclude Include="Orders_user.h" />
     <ClInclude Include="Product.h" />
