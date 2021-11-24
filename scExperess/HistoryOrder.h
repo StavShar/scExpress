@@ -10,17 +10,20 @@ typedef struct
 {
 	char* username;
 	int id;
+	int serial;
 	char status;
 	ProductFile* items;
 }orders;
 
-void orderHistory(int id, ProductFile* order, int items, char status);
+void orderHistory(int id, ProductFile* order, int items, char status, int* ptr, float* pTotalPrice)
 //status shloud get if the order is approved or not 
 int main()
 {
 	ProductFile* order;
 	int id;
 	int items, i;
+	int* ptr;
+	ptr = 0;
 
 	scanf("%d", &id);
 	char name[50];
@@ -36,8 +39,10 @@ int main()
 		scanf("%d", &order[i].amount);
 		scanf("%f", &order[i].price);
 	}
-	orderHistory(id, order, items);
-	free(order);
+
+	orderHistory(id, order, items, &ptr);
+
 	return 0;
+
 }
 

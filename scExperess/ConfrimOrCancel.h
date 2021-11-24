@@ -11,6 +11,7 @@ typedef struct
 {
 	char* username;
 	int id;
+	int serial;
 	char status;//Confirm or cancel\delay the order.
 	ProductFile* items;
 
