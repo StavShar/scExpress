@@ -1,4 +1,4 @@
-//#include "searchProduct.h"
+#include "searchProduct.h"
 //#include <stdio.h>
 //#include <string.h>
 //
@@ -101,10 +101,11 @@
 //}
 void Select_cat(Product* list,int size)
 {
-    char* name;
+    int x = 0;
+    char* name ,str[50];
     printf("Please select the category name:");
-    
-    name = (char*)malloc((strlen(name) + 1) * sizeof(char));
+    gets(str);
+    name = (char*)malloc((strlen(str) + 1) * sizeof(char));
     if(name == NULL)
     {
         printf("eror");
@@ -116,7 +117,14 @@ void Select_cat(Product* list,int size)
         if(strcmp(list[i].category,name))
         {
             Print_Product(list[i]);
+            x++;
         }
+        
     }
+    if(x == 0)
+    {
+        printf("This category does not exist");
+    }
+    
 }
 
