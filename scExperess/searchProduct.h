@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Product.h"
 
 char Name_search(Product* list,int size ,char* name);
 int Serial_num_search(Product* list,int size ,int num);

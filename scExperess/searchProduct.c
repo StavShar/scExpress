@@ -103,6 +103,7 @@ void Select_cat(Product* list,int size)
 {
     char* name;
     printf("Please select the category name:");
+    
     name = (char*)malloc((strlen(name) + 1) * sizeof(char));
     if(name == NULL)
     {
