@@ -1,4 +1,4 @@
-
+#include "Product.h"
 
 typedef struct
 {
@@ -23,7 +23,7 @@ int DailyProfit(float* pTotalPrice, float tp);
 void PrintfProfit(int* pTotalPrice);
 int countItems(ProductFile* ListOrders);
 int countOrder(orders* ListOrders);
-orders* MakeOrder(ProductFile* listPro, int flag, int* ptr);
+orders* MakeOrder(ProductFile* listPro, int flag, int* ptr, int* pSer, char* username, int id);
 void ViewOrders(orders* ListOrders, int* ptr);
 orders* ChangeStatus(orders* Allorders);
 void orderHistory(int id, ProductFile* order, int items, char status, int* ptr, float* pTotalPrice);
