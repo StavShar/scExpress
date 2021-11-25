@@ -108,17 +108,54 @@
     {
         FILE* fw;
 
-        fw = fopen("Users.csv", "w");//open file for writing
+        fw = fopen("Client.csv", "w");//open file for writing
         if (fw == NULL)
         {
             printf("Error!! file can't be opened\n");
             exit(1);
         }
         for (int i = 0; i < size; i++)
-            fprintf(fw, "%s,%s,%s,%s \n", list[i].name, list[i].id, list[i].password, list[i].status);
+            fprintf(fw, "%s,%d,%d,%c,%c\n", list[i].name, list[i].id, list[i].password, list[i].status, list[i].clubMember);
         fclose(fw);//close file
     }
 
+    void get_All_Data_Client(Client* list, int size)
+    {
+        FILE* fr;
+        char line[500];
+        char* sp, *name;
+        int id, pas, status, clubmember;
+
+        fr = fopen("Client.csv", "r");//open file for reading
+        if (fr == NULL)
+        {
+            printf("Error!! file can't be opened\n");
+            exit(1);
+        }
+        while (fgets(line, 500, fr) != NULL)
+        {
+            sp = strtok(line, ",");
+            name = (char*)malloc((strlen(sp) + 1) * sizeof(char));
+            if (name == NULL)
+            {
+                printf("Allocate memory failed.\n");
+                exit(1);
+            }
+            strcpy(name, sp);
+            sp = strtok(NULL, ",");
+            id = atoi(sp);
+            sp = strtok(NULL, ",");
+            pas = atoi(sp);
+            sp = strtok(NULL, ",");
+            status = sp[0];
+            sp = strtok(NULL, ",");
+            clubmember = sp[0];
+            
+        }
+        fclose(fr);//close file
+        return list;
+    }
+    
 
 
     //client login
@@ -219,6 +256,55 @@
         //end switchcase exit system go to manager/client menu
     }
 
+    //adding manager into the manager's list
+    Manager* Add_Manager(Manager* list, int* size, char* name, int id, int pas)
+    {
+        Manager* newlist = NULL;
+
+        newlist = (Manager*)malloc((*size + 1) * sizeof(Manager));
+        if (newlist == NULL)
+        {
+            printf("Allocate memory failed.\n");
+            exit(1);
+        }
+        //copy old list
+        for (int i = 0; i < *size; i++)
+        {
+            newlist[i].name = (char*)malloc((strlen(list[i].name) + 1) * sizeof(char));
+            if (newlist[i].name == NULL)
+            {
+                printf("Allocate memory failed.\n");
+                exit(1);
+            }
+            strcpy(newlist[i].name, list[i].name);
+            
+            newlist[i].id = list[i].id;
+            newlist[i].password = list[i].password;
+        }
+
+        //add new product
+        newlist[*size].name = (char*)malloc((strlen(name) + 1) * sizeof(char));
+        if (newlist[*size].name == NULL)
+        {
+            printf("Allocate memory failed.\n");
+            exit(1);
+        }
+        strcpy(newlist[*size].name, name);
+        newlist[*size].id = p.id;
+        newlist[*size].password = p.password;
+
+        (*size)++;
+        //delete old list
+        for (int i = 0; i < *size - 1; i++)
+        {
+            free(list[i].name);
+            free(list[i].category);
+        }
+        free(list);
+        return newlist;
+
+    }
+
     //manager register
     void ManagerRegister()
     {
@@ -316,15 +402,19 @@
     {
         FILE* fw;
 
-        fw = fopen("Users.csv", "w");//open file for writing
+        fw = fopen("Managers.csv", "w");//open file for writing
         if (fw == NULL)
         {
             printf("Error!! file can't be opened\n");
             exit(1);
         }
         for (int i = 0; i < size; i++)
-            fprintf(fw, "%s,%s,%s \n", list[i].name, list[i].id, list[i].password);
+            fprintf(fw, "%s,%d,%d\n", list[i].name, list[i].id, list[i].password);
         fclose(fw);//close file
+    }
+
+    void get_All_Data_Manager(Manager* list, int size)
+    {
     }
 
 

@@ -25,10 +25,13 @@ typedef struct
 void ClientRegister();
 int ClientLogin();
 void ClientLogout();
+Manager* Add_Manager(Manager* list, int* size, char* name, int id, int pas);
 void ManagerRegister();
 void ManagerLogin();
 void ManagerLogout();
 void ActionsOnClient(Client c);
 void set_All_Data_Client(Client* list, int size);
+void get_All_Data_Client(Client* list, int size);
 void set_All_Data_Manager(Manager* list, int size);
+void get_All_Data_Manager(Manager* list, int size);
 void ClubMember(Client c);
