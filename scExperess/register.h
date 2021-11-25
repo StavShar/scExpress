@@ -23,10 +23,10 @@ typedef struct
 
 //Client Register(Members* list, int size, int sn);
 void ClientRegister();
-void ClientLogin(Client c);
+int ClientLogin();
 void ClientLogout();
 void ManagerRegister();
-void ManagerLogin(Manager m);
+void ManagerLogin();
 void ManagerLogout();
 void ActionsOnClient(Client c);
 void set_All_Data_Client(Client* list, int size);

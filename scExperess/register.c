@@ -122,9 +122,9 @@
 
 
     //client login
-    void ClientLogin(Client c)
+    int ClientLogin()
     {
-        int i, flag = 1;
+        int i, flag = 1,flag2=1;
         char userName[50], id[50], password[50],clubMember[50];
         printf("please enter your User Name: ");
         do {
@@ -152,27 +152,32 @@
             printf("Wrong Id, please try again: ");
         } while (flag == 0);
         
-        if(strcmp(c.status,"blocked")==0)
+        if (strcmp(c.status, "blocked") == 0)
+        {
+            flag2 = 0;
             printf("This user is blocked. Please contact management for more details");
-        //switch case back to client/manager login
+        }
 
+        //exit switch case back to client/manager login
 
-        flag = 1;
-        printf("please enter your Password: ");
-        do {
-            scanf("%s", password);
-            if (strcmp(password,c.password) == 0)
-            {
-                flag = 1;
-                continue;
-            }
-            flag = 0;
-            printf("Wrong Password, please try again: ");
-        } while (flag == 0);
-        ClubMember(c);
-
-
-
+        if (flag2)
+        {
+            flag = 1;
+            printf("please enter your Password: ");
+            do {
+                scanf("%s", password);
+                if (strcmp(password, c.password) == 0)
+                {
+                    flag = 1;
+                    continue;
+                }
+                flag = 0;
+                printf("Wrong Password, please try again: ");
+            } while (flag == 0);
+            ClubMember(c);
+            return 1;
+        }
+        else return 0;
     }
 
     //switchcase
@@ -324,7 +329,7 @@
 
 
     //manager login
-    void ManagerLogin(Manager m)
+    void ManagerLogin()
     {
         int i, flag = 1;
         char userName[50], id[50], password[50];
@@ -353,9 +358,6 @@
             flag = 0;
             printf("Wrong Id, please try again: ");
         } while (flag == 0);
-
-        
-        //switch case back to client/manager login
 
 
         flag = 1;
@@ -390,8 +392,8 @@
             printf("do you want to be a club member? choose one of the options: \n ");
             printf("0 - yes \n ");
             printf("1 - no \n ");
-            scanf("%s", option);
-            if (strcmp(option, "0") == 0)
+            scanf("%c", &option);
+            if (option == '0')
                 strcpy(c.clubMember, "club member");
 
             // do a discount
