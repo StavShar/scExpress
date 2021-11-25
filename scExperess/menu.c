@@ -157,7 +157,7 @@ void ManagerLoop()
             ChangeStatus();
             break;
         case 6:
-            //AverageRating();
+            Print_Rating();
             break;
         case 6:
             ActionsOnClient();
@@ -202,7 +202,7 @@ void printManagerOptions()
 }//end method printManagerOptions()
 
 
-voidClientLoop()
+void ClientLoop()
 {
     int ClientRun = 1, option;
     while (ClientRun)
