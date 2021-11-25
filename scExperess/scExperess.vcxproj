@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Cart.c" />
     <ClCompile Include="Main.c" />
+    <ClCompile Include="menu.c" />
     <ClCompile Include="Orders.c" />
     <ClCompile Include="Orders_user.c" />
     <ClCompile Include="Product.c" />
@@ -29,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cart.h" />
+    <ClInclude Include="menu.h" />
     <ClInclude Include="Orders.h" />
     <ClInclude Include="Orders_user.h" />
     <ClInclude Include="Product.h" />
