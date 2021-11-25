@@ -64,7 +64,7 @@ void set_All_Data(Product* list, int size)
 {
 	FILE* fw;
 
-	fw = fopen("Products2.csv", "w");//open file for writing
+	fw = fopen("Products.csv", "w");//open file for writing
 	if (fw == NULL)
 	{
 		printf("Error!! file can't be opened\n");
