@@ -1,4 +1,4 @@
-
+#include "menu.h"
 
 #pragma warning(disable: 4996)
 #define _CRT_SECURE_NO_WARNINGS
@@ -6,8 +6,13 @@
 
 void mainMenu()
 {
+    Manager* managers;
+    Client* clients;
+    int managers_size, clients_size;
     int GeneralRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
+    managers = get_All_Data_Manager(managers, &managers_size);
+    clients = get_All_Data_Client(clients, &clients_size);
     while (GeneralRun)
     {  //while we still want to run:
         printGeneralOptions();//print the menu
@@ -15,11 +20,11 @@ void mainMenu()
         switch (option)
         {//act accordingly:
         case 1:
-            ManagerEntranceLoop();
+            ManagerEntranceLoop(managers, &managers_size);
             //activate the methods that resposible for it
             break;//end of this iteration
         case 2:
-            ClientEntranceLoop();
+            ClientEntranceLoop(clients, clients_size);
             break;
         case 3:
             GeneralRun = 0; //we want to stop running.
@@ -29,7 +34,8 @@ void mainMenu()
         }//end switch
 
     }//end while(run)
-
+    set_All_Data_Client(clients, clients_size);
+    set_All_Data_Manager(managers, managers_size);
 }
 
 //A function that print the menu to screen.
@@ -43,7 +49,7 @@ void printGeneralOptions()
     printf("----------------------------------------------------------------------\n");
 }//end method printManagerOptions()
 
-void ManagerEntranceLoop()
+void ManagerEntranceLoop(Manager* managers, int* size)
 {
     int ManagerEntranceRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
@@ -82,7 +88,7 @@ void printManagerEntranceOptions()
     printf("----------------------------------------------------------------------\n");
 }//end method printOptions()
 
-void ClientEntranceLoop()
+void ClientEntranceLoop(Client* clients, int* size)
 {
     int ClientEntranceRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
@@ -101,7 +107,7 @@ void ClientEntranceLoop()
             {
                 ClientLoop();
             }
-            ClientEntranceLoop();
+            ClientEntranceLoop(clients, size);// ????
 
 
             break;
@@ -128,8 +134,13 @@ void printClientEntranceOptions()
 
 void ManagerLoop()
 {
+    Product* products;
+    orders* Orders;
+    int products_size, Orders_size, sn;
     int ManagerRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
+    products = Get_All_Data(products, &products_size);
+    Orders = Get_All_Waiting_Orders(Orders, &Orders_size);
     while (ManagerRun)
     {  //while we still want to run:
         printManagerOptions();//print the menu
@@ -140,11 +151,13 @@ void ManagerLoop()
 
             break;//end of this iteration
         case 2:
-            Name_search();
-            Serial_num_search();
+            Searches(products, products_size);
+
             break;
         case 3:
-            Update_Price();
+            printf("Enter serial number: ");
+            scanf("%d", &sn);
+            Update_Price(products, products_size, sn);
             break;
         case 4:
             ViewOrders();
@@ -159,14 +172,16 @@ void ManagerLoop()
             ActionsOnClient();
             break;
         case 7:
-            Discount_Product();
+            printf("Enter serial number: ");
+            scanf("%d", &sn);
+            Discount_Product(products, products_size, sn);
             break;
         case 8:
             DailyProfit();
             break;
         case 9:
-            Print_All_Products();
-            Print_Products_Out_Of_Stock();
+            Print_All_Products(products, products_size);
+            Print_Products_Out_Of_Stock(products, products_size);
             break;
         case 10:
             ManagerRun = 0; //we want to stop running.
@@ -176,6 +191,8 @@ void ManagerLoop()
         }//end switch
 
     }//end while(run)
+    set_All_Data(products, products_size);
+    Set_All_Waiting_Orders(Orders, Orders_size);
 }
 
 //A function that print the menu to screen.
@@ -199,7 +216,15 @@ void printManagerOptions()
 
 void ClientLoop()
 {
+    Product* products;
+    orders* Orders;
+    Cart cart;
+    int products_size, Orders_size, cart_size, sn, quantity;
     int ClientRun = 1, option;
+    char name[50];
+    products = Get_All_Data(products, &products_size);
+    Orders = Get_All_Waiting_Orders(Orders, &Orders_size);
+
     while (ClientRun)
     {//while we still want to run:
         printClientOptions();//print the menu
@@ -210,23 +235,30 @@ void ClientLoop()
             //activate the functions that resposible for it
             break;//end of this iteration
         case 2:
-            Select_cat();
+            Select_cat(products, products_size);
             break;
         case 3:
-            Low_to_high();
+            Low_to_high(products, products_size);
             break;
         case 4:
-            Name_search();
+            printf("Enter name of product: ");
+            getchar();
+            gets(name);
+            Name_search(products, products_size, name);
             break;
         case 5:
 
             Print_Rating();
             break;
         case 6:
-            Add_To_Cart();
+            printf("Enter serial number of product: ");
+            scanf("%d", &sn);
+            printf("Enter quantity: ");
+            scanf("%d", &quantity);
+            cart = Add_To_Cart(products, products_size,cart,&cart_size,sn,quantity);
             break;
         case 7:
-            View_cart();
+            View_cart(products, products_size, cart, cart_size);
             break;
         case 8:
             Website_ranking();
@@ -255,7 +287,36 @@ void printClientOptions()
     printf("8- Rate the site\n");
     printf("9- Logout\n");
     printf("----------------------------------------------------------------------\n");
-}//end method printClientOptions()
+}
+
+void Searches(Product* products, int size)
+{
+    int sn, option, flag = 1;
+    char name[50];
+
+    do {
+        printf("1- Search product by name\n2- Search product by serial number\n");
+        scanf("%d", &option);
+        if (option == 1)
+        {
+            printf("Enter name of product: ");
+            getchar();
+            gets(name);
+            Name_search(products, size, name);
+            flag = 0;
+        }
+        else if (option == 2)
+        {
+            printf("Enter serial number of product: ");
+            scanf("%d", &sn);
+            Serial_num_search(products, size, sn);
+            flag = 0;
+        }
+        else
+            printf("Wrong number, please try again.\n");
+    } while (flag);
+}
+//end method printClientOptions()
 
 
 

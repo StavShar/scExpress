@@ -497,9 +497,11 @@
     void ManagerLogin()
     {
         int i, flag = 1;
-        char userName[50], id[50], password[50];
-        printf("please enter your User Name: ");
+        char userName[100];
+        int id, password;
+        printf("please enter your User Name: \n");
         do {
+            getchar();
             gets(userName);
             if (strcmp(userName, m.name) == 0)
             {

@@ -110,7 +110,7 @@ orders* Get_All_Waiting_Orders(orders* list, int* size)
 	return list;
 }
 
-orders* Set_All_Waiting_Orders(orders* list, int* size)
+orders* Set_All_Waiting_Orders(orders* list, int size)
 {
 	FILE* fw;
 
