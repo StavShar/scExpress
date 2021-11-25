@@ -9,9 +9,9 @@ orders* ChangeStatus(orders* Allorders)
 	char YN;//Yes and No to approve or cancel
 	puts("Please enter the customer's id: ");
 	scanf("%d", &serial);
-	while (serial != Allorders->id)
+	while (serial != Allorders->serial)
 	{
-		puts("Worng id, try again.");
+		puts("Worng serial, try again.");
 	}
 	printf("Y = Confrim\nN = Cancel\n");
 	printf("User details:\nName: %s :: ID: %d", Allorders[i].username, Allorders[i].id);
@@ -26,3 +26,4 @@ orders* ChangeStatus(orders* Allorders)
 	}
 	return Allorders;
 }
+
