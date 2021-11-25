@@ -104,7 +104,7 @@
 
 
     //set all products data in "Users.csv" file
-    void set_All_Data(User* list, int size)
+    void set_All_Data(Client* list, int size)
     {
         FILE* fw;
 
@@ -307,7 +307,7 @@
 
 
     //set all products data in "Users.csv" file
-    void set_All_Data(User* list, int size)
+    void set_All_Data(Manager* list, int size)
     {
         FILE* fw;
 
