@@ -1,10 +1,4 @@
-#include "Cart.h"
-#include "menu.h"
-#include "Orders.h"
-#include "Orders_user.h"
-#include "Product.h"
-#include "register.h"
-#include "searchProduct.h"
+
 
 #pragma warning(disable: 4996)
 #define _CRT_SECURE_NO_WARNINGS
@@ -35,6 +29,7 @@ void mainMenu()
         }//end switch
 
     }//end while(run)
+
 }
 
 //A function that print the menu to screen.
@@ -75,6 +70,7 @@ void ManagerEntranceLoop()
 
     }//end while(run)
 }
+
 //A function that print the menu to screen.
 void printManagerEntranceOptions()
 {
@@ -118,6 +114,7 @@ void ClientEntranceLoop()
 
     }//end while(run)
 }
+
 //A function that print the menu to screen.
 void printClientEntranceOptions()
 {
@@ -128,7 +125,6 @@ void printClientEntranceOptions()
     printf("3- Exit\n");
     printf("----------------------------------------------------------------------\n");
 }//end method printOptions()
-
 
 void ManagerLoop()
 {
@@ -200,7 +196,6 @@ void printManagerOptions()
     printf("10- Logout\n");
     printf("----------------------------------------------------------------------\n");
 }//end method printManagerOptions()
-
 
 void ClientLoop()
 {
