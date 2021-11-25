@@ -108,7 +108,7 @@
     {
         FILE* fw;
 
-        fw = fopen("Client.csv", "w");//open file for writing
+        fw = fopen("Clients.csv", "w");//open file for writing
         if (fw == NULL)
         {
             printf("Error!! file can't be opened\n");
@@ -119,14 +119,14 @@
         fclose(fw);//close file
     }
 
-    void get_All_Data_Client(Client* list, int size)
+    Client* get_All_Data_Client(Client* list, int* size)
     {
         FILE* fr;
         char line[500];
         char* sp, *name;
         int id, pas, status, clubmember;
 
-        fr = fopen("Client.csv", "r");//open file for reading
+        fr = fopen("Clients.csv", "r");//open file for reading
         if (fr == NULL)
         {
             printf("Error!! file can't be opened\n");
@@ -150,14 +150,12 @@
             status = sp[0];
             sp = strtok(NULL, ",");
             clubmember = sp[0];
-            
+            list = Add_Client(list, size, name, id, pas, status, clubmember);
         }
         fclose(fr);//close file
         return list;
     }
     
-
-
     //client login
     int ClientLogin()
     {
@@ -290,19 +288,66 @@
             exit(1);
         }
         strcpy(newlist[*size].name, name);
-        newlist[*size].id = p.id;
-        newlist[*size].password = p.password;
+        newlist[*size].id = id;
+        newlist[*size].password = pas;
 
         (*size)++;
         //delete old list
         for (int i = 0; i < *size - 1; i++)
-        {
             free(list[i].name);
-            free(list[i].category);
-        }
+
         free(list);
         return newlist;
+    }
 
+    //adding manager into the manager's list
+    Client* Add_Client(Client* list, int* size, char* name, int id, int pas, char status, char clubmember)
+    {
+        Client* newlist = NULL;
+
+        newlist = (Client*)malloc((*size + 1) * sizeof(Client));
+        if (newlist == NULL)
+        {
+            printf("Allocate memory failed.\n");
+            exit(1);
+        }
+        //copy old list
+        for (int i = 0; i < *size; i++)
+        {
+            newlist[i].name = (char*)malloc((strlen(list[i].name) + 1) * sizeof(char));
+            if (newlist[i].name == NULL)
+            {
+                printf("Allocate memory failed.\n");
+                exit(1);
+            }
+            strcpy(newlist[i].name, list[i].name);
+
+            newlist[i].id = list[i].id;
+            newlist[i].password = list[i].password;
+            newlist[i].status = list[i].status;
+            newlist[i].clubMember = list[i].clubMember;
+        }
+
+        //add new product
+        newlist[*size].name = (char*)malloc((strlen(name) + 1) * sizeof(char));
+        if (newlist[*size].name == NULL)
+        {
+            printf("Allocate memory failed.\n");
+            exit(1);
+        }
+        strcpy(newlist[*size].name, name);
+        newlist[*size].id = id;
+        newlist[*size].password = pas;
+        newlist[*size].status = status;
+        newlist[*size].clubMember = clubmember;
+
+        (*size)++;
+        //delete old list
+        for (int i = 0; i < *size - 1; i++)
+            free(list[i].name);
+
+        free(list);
+        return newlist;
     }
 
     //manager register
@@ -413,8 +458,38 @@
         fclose(fw);//close file
     }
 
-    void get_All_Data_Manager(Manager* list, int size)
+    Manager* get_All_Data_Manager(Manager* list, int* size)
     {
+        FILE* fr;
+        char line[500];
+        char* sp, * name;
+        int id, pas;
+
+        fr = fopen("Managers.csv", "r");//open file for reading
+        if (fr == NULL)
+        {
+            printf("Error!! file can't be opened\n");
+            exit(1);
+        }
+        while (fgets(line, 500, fr) != NULL)
+        {
+            sp = strtok(line, ",");
+            name = (char*)malloc((strlen(sp) + 1) * sizeof(char));
+            if (name == NULL)
+            {
+                printf("Allocate memory failed.\n");
+                exit(1);
+            }
+            strcpy(name, sp);
+            sp = strtok(NULL, ",");
+            id = atoi(sp);
+            sp = strtok(NULL, ",");
+            pas = atoi(sp);
+      
+            list = Add_Manager(list, size, name, id, pas);
+        }
+        fclose(fr);//close file
+        return list;
     }
 
 
