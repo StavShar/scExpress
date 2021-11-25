@@ -16,3 +16,5 @@ typedef struct
 	ProductFile* items;
 
 }orders;
+
+int getSer(int* pSer);
