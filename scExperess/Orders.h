@@ -14,16 +14,19 @@ typedef struct
 	int id;
 	int serial;
 	char status;
+	int size;
 	ProductFile* items;
+	
 }orders;
 
+//
+orders* Get_All_Waiting_Orders(orders* list, int* size);
+orders* Add_Order(orders* list, int* size, orders order);
 
-
+//
 int DailyProfit(float* pTotalPrice, float tp);
 void PrintfProfit(int* pTotalPrice);
-int countItems(ProductFile* ListOrders);
-int countOrder(orders* ListOrders);
-orders* MakeOrder(ProductFile* listPro, int flag, int* ptr, int* pSer, char* username, int id);
+orders MakeOrder(ProductFile* listPro, int* sizep, int orderSN, char* username, int id);
 void ViewOrders(orders* ListOrders, int* ptr);
 orders* ChangeStatus(orders* Allorders);
 void orderHistory(int id, ProductFile* order, int items, char status, int* ptr, float* pTotalPrice);

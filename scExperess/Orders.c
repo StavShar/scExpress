@@ -15,7 +15,7 @@ void ViewOrders(orders* ListOrders, int* ptr)
 		View = fopen("HistoryOfAllOrders.csv", "r");
 		while (View != EOF)
 		{
-			fputc(file, View);
+			//fputc(file, View);
 		}
 	}
 	else
@@ -28,54 +28,131 @@ void ViewOrders(orders* ListOrders, int* ptr)
 //pSer is initialized at digit 10000, to make a following serial number
 //username is the name of the customer
 //id is the id number of the customer
-orders* MakeOrder(ProductFile* listPro, int flag, int* ptr, int* pSer, char* username, int id)
+orders MakeOrder(ProductFile* listPro, int* sizep, int orderSN, char* username, int id)
 {
-	orders* NewOrder;
-	int items = 0, i;
-	if (flag == 0)
+	orders order;
+	order.username = (char*)malloc((strlen(username) + 1) * sizeof(char));
+	if (order.username == NULL)
 	{
-		NewOrder = (orders*)malloc(1 * sizeof(orders));
+		printf("Allocate memory failed.\n");
+		exit(1);
 	}
-	else
-	{
-		NewOrder = (orders*)realloc(NewOrder, 1 * sizeof(orders));//Added one at the time 
-	}
+	strcpy(order.username, username);
+	order.id = id;
+	order.items = listPro;
+	order.serial = orderSN;
+	order.status = "w";
 
-	items = countItems(listPro);
-	NewOrder[*ptr].id = id;
-	strcpy(NewOrder[*ptr].username, username);
-	NewOrder[*ptr].serial = getSer(*pSer);
-	for (i = 0; i < items; i++)
-	{
-		strcpy(NewOrder[*ptr].items[i].name, listPro[i].name);
-		NewOrder[*ptr].items[i].amount = listPro[i].amount;
-		NewOrder[*ptr].items[i].sn = listPro[i].sn;
-		NewOrder[*ptr].items[i].price = listPro[i].price;
-	}
-	*ptr++;//For the next customer order.
-	return NewOrder;
+	return order;
 }
 
 //pSer is initialized at digit 10000, to make a following serial number
 int getSer(int* pSer)
 {
-	*pSer += 4;
+	(*pSer) += 4;
 	return *pSer;
 }
 
-int countOrder(orders* ListOrders)
+orders* Get_All_Waiting_Orders(orders* list, int* size)
 {
-	int i;
-	for (i = 0; !(ListOrders[i].username); i++);//Couting the size of the array of structre
-	return i;
-
+	FILE* fr;
+	ProductFile* plist;
+	char line[500];
+	char* sp, * username, * name;
+	int Osn, sn2, amount, id, size1 = 0;
+	char status;
+	float price;
+	fr = fopen("WaitingOrders.csv", "r");//open file for reading
+	if (fr == NULL)
+	{
+		printf("Error!! file can't be opened\n");
+		exit(1);
+	}
+	while (fgets(line, 500, fr) != NULL)
+	{
+		sp = strtok(line, ",");
+		username = (char*)malloc((strlen(sp) + 1) * sizeof(char));
+		if (username == NULL)
+		{
+			printf("Allocate memory failed.\n");
+			exit(1);
+		}
+		strcpy(username, sp);
+		sp = strtok(NULL, ",");
+		id = atoi(sp);
+		sp = strtok(NULL, ",");
+		Osn = atoi(sp);
+		sp = strtok(NULL, ",");
+		status = sp[0];
+		sp = strtok(line, ",");
+		size1 = atoi(sp);
+		plist = (ProductFile*)malloc(size1 * sizeof(ProductFile));
+		if (plist == NULL)
+		{
+			printf("Allocate memory failed.\n");
+			exit(1);
+		}
+		for (int i = 0; i < size1; i++)//init plist
+		{
+			plist[i].name = (char*)malloc((strlen(sp) + 1) * sizeof(char));
+			if (plist[i].name == NULL)
+			{
+				printf("Allocate memory failed.\n");
+				exit(1);
+			}
+			strcpy(plist[i].name, sp);
+			sp = strtok(NULL, ",");
+			sn2 = atoi(sp);
+			sp = strtok(NULL, ",");
+			amount = atoi(sp);
+			sp = strtok(NULL, ",");
+			price = atof(sp);
+			plist[i].amount = amount;
+			plist[i].price = price;
+			plist[i].sn = sn2;
+		}
+		list = Add_Order(list, size, MakeOrder(plist, &size1, Osn, username, id));
+	}
+	fclose(fr);//close file
+	return list;
 }
 
-int countItems(ProductFile* ListOrders)
+orders* Add_Order(orders* list, int* size, orders order)
 {
-	int i, j;
-	for (i = 0; !(ListOrders->name); i++);
-	return i;
+	orders* newlist;
+	newlist = (orders*)malloc((*size + 1) * sizeof(orders));
+	if (newlist == NULL)
+	{
+		printf("Allocate memory failed.\n");
+		exit(1);
+	}
+	//copy old list
+	for (int i = 0; i < *size; i++)
+	{
+		newlist[i].username = (char*)malloc((strlen(list[i].username) + 1) * sizeof(char));
+		if (newlist[i].username == NULL)
+		{
+			printf("Allocate memory failed.\n");
+			exit(1);
+		}
+		strcpy(newlist[i].username, list[i].username);
+		newlist[i].id = list[i].id;
+		newlist[i].items = list[i].items;
+		newlist[i].serial = list[i].serial;
+		newlist[i].status = list[i].status;
+		newlist[i].size = list[i].size;
+	}
+	newlist[*size].username = order.username;
+	newlist[*size].id = order.id;
+	newlist[*size].items = order.items;
+	newlist[*size].serial = order.serial;
+	newlist[*size].status = order.status;
+	newlist[*size].size = order.size;
+	(*size)++;
+
+	free(list);
+
+	return newlist;
 }
 
 //pTotalPrice initialized to 0 at first, to start with 0 profit
@@ -93,13 +170,13 @@ void PrintfProfit(int* pTotalPrice)
 
 orders* ChangeStatus(orders* Allorders)
 {
-	int i, serial;
+	int i=0, serial;
 	char YN;//Yes and No to approve or cancel
 	puts("Please enter the customer's id: ");
 	scanf("%d", &serial);
 	while (serial != Allorders->id)
 	{
-		puts("Worng id, try again.");
+		puts("Worng id, try again.\n");
 	}
 	printf("Y = Confrim\nN = Cancel\n");
 	printf("User details:\nName: %s :: ID: %d", Allorders[i].username, Allorders[i].id);
