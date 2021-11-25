@@ -99,3 +99,23 @@
 //        Print_Product(list[i]);
 //    }
 //}
+void Select_cat(Product* list,int size)
+{
+    char* name;
+    printf("Please select the category name:");
+    name = (char*)malloc((strlen(name) + 1) * sizeof(char));
+    if(name == NULL)
+    {
+        printf("eror");
+        return;
+    }
+    
+    for(int i = 0; i < size; i++)
+    {
+        if(strcmp(list[i].category,name))
+        {
+            Print_Product(list[i]);
+        }
+    }
+}
+
