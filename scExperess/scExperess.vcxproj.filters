@@ -30,16 +30,10 @@
     <ClCompile Include="Cart.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HistoryOrder.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ConfrimOrCancel.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Manager_Func.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="register.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Orders.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,16 +50,10 @@
     <ClInclude Include="Cart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HistoryOrder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ConfrimOrCancel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Manager_func.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="register.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Orders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

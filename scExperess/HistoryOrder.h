@@ -1,21 +1,6 @@
-typedef struct
-{
-	char name[30];
-	int sn;
-	int amount;
-	float price;
-}ProductFile;
 
-typedef struct
-{
-	char* username;
-	int id;
-	int serial;
-	char status;
-	ProductFile* items;
-}orders;
 
-void orderHistory(int id, ProductFile* order, int items, char status, int* ptr, float* pTotalPrice)
+
 //status shloud get if the order is approved or not 
 int main()
 {
