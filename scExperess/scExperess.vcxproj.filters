@@ -39,6 +39,9 @@
     <ClCompile Include="Manager_Func.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="register.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Orders_user.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Manager_func.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="register.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -27,6 +27,7 @@
     <ClCompile Include="Orders_user.c" />
     <ClCompile Include="Product.c" />
     <ClCompile Include="searchProduct.c" />
+    <ClCompile Include="register.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cart.h" />
@@ -35,6 +36,7 @@
     <ClInclude Include="Manager_func.h" />
     <ClInclude Include="Orders_user.h" />
     <ClInclude Include="Product.h" />
+    <ClInclude Include="register.h" />
     <ClInclude Include="searchProduct.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
