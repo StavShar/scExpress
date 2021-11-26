@@ -238,7 +238,7 @@ void PrintfProfit(int* pTotalPrice)
 
 float ChangeStatus(orders* Allorders, int* size, int sn)
 {
-	int i, items = 0;
+	int i;
 	float tp = 0;
 	char YN;//Yes and No to approve or cancel
 	puts("Please enter the customer's id: ");
@@ -258,10 +258,8 @@ float ChangeStatus(orders* Allorders, int* size, int sn)
 			{
 				Allorders[i].status = "N";
 			}
-			items = countOrder(Allorders[i].items);
-			tp = orderHistory(Allorders[i].id, Allorders, items, sn);
+			tp = orderHistory(Allorders[i].id, Allorders, Allorders[i].items, sn);
 			Remove_Order(Allorders, size, sn);
-
 		}
 	}
 	return tp;

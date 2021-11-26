@@ -1,12 +1,8 @@
-#include <stdio.h>
-#include "Test.h"
-#include "Orders_user.h"
+#include "menu.h"
 
 int main()
 {
-	test();
-	//dddddd
+	mainMenu();
 	
-	orderHistory();
-	return;
+	return 0;
 }

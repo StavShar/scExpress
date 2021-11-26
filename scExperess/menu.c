@@ -98,7 +98,7 @@ void ClientEntranceLoop(Client* clients, int* size)
     Client c;
     while (ClientEntranceRun)
     {  //while we still want to run:
-        printClientEntrancOptions();//print the menu
+        printClientEntranceOptions();//print the menu
         scanf("%d", &option);//get the user choise
         switch (option)
         {//act accordingly:
@@ -148,7 +148,7 @@ void ManagerLoop(float* profit, Manager m)
         scanf("%d", &option);//get the user choise
         switch (option) {//act accordingly:
         case 1:
-            ActionsOnProducts();
+            ActionsOnProducts(products, &products_size);
 
             break;//end of this iteration
         case 2:
@@ -316,6 +316,42 @@ void printCartMenu()
 
 }
 
+void ActionsOnProducts(Product* list, int* size)
+{
+    int index, flag = 1, option;
+    int sn;
+    while (flag)
+    {  
+        printf("Please choose one of the following options:\n Press\n");
+        printf("----------------------------------------------------------------------\n");
+        printf("1- Actions on a product\n");
+        printf("2- Search product\n");
+        printf("3- change price\n");
+        scanf("%d", &option);
+        switch (option)
+        {
+        case 1:
+            list = Add_Product(list, size, New_Product());
+            break;
+        case 2:
+            printf("Enter serial number of product: ");
+            scanf("%d", &sn);
+            list = Remove_Product(list, size, sn);
+            break;
+        case 3:
+            printf("Enter serial number of product: ");
+            scanf("%d", &sn);
+            Update_Quantity(list, size, sn);
+            break;
+        default: 
+            printf("Wrong option. Please try again!\n");
+        }
+
+    }
+}
+    
+
+
 //A function that print the menu to screen.
 void printClientOptions()
 {
@@ -360,6 +396,7 @@ void Searches(Product* products, int size)
             printf("Wrong number, please try again.\n");
     } while (flag);
 }
+
 void Get_Rating_vars(int* tr, int* rcount)
 {
     FILE* fr;

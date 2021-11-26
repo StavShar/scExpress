@@ -41,7 +41,7 @@
         flag = 1;
         printf("please enter your Id: ");
         do {
-            scanf("%d", id);
+            scanf("%d", &id);
             if (id < 100000000 || id > 999999999)
             {
                 printf("Id must be 9 digits. please tery again ");
@@ -55,7 +55,7 @@
         printf("please enter your Password: ");
         flag = 1;
         do{
-            scanf("%d", password);
+            scanf("%d", &password);
             if (password < 10000 || password > 99999)
             {
                 printf("Password must be 5 digits. please tery again ");
@@ -129,6 +129,9 @@
         char userName[50];
         char clubMember;
         printf("please enter your Id: ");
+        scanf("%d", &id);
+        printf("please enter your password: ");
+        scanf("%d", &password);
         for (i = 0;i < size;i++)
         {
             if (list[i].id == id)
@@ -171,19 +174,23 @@
     //switchcase
 
      //actions on a client
-    void ActionsOnClient()
+    void ActionsOnClient(Client* c, int clients_size)
     {
-        int i, flag = 1;
+        int flag = 1;
         char userName[50];
-        int id, password;
+        int id, password, index;
         printf("Please enter client's details: ");
         printf("Name: ");
         do {
             printf("User Name: ");
             gets(userName);
             printf("Id: ");
-            scanf("%d", id);
-            if (strcmp(userName, c.name) == 0 && id== c.id)
+            scanf("%d", &id);
+            for(int i=0;i<clients_size;i++)
+                if (c[i].id == id) 
+                    index = i;
+
+            if (strcmp(userName, c[index].name) == 0 && id== c[index].id)
             {
                 flag = 1;
                 continue;
@@ -201,10 +208,10 @@
             switch (option)
             {//act accordingly:
             case 1:
-                c.status = 'n';               //activate the methods that resposible for it
+                c[index].status = 'n';               //activate the methods that resposible for it
                 break;//end of this iteration
             case 2:
-                c.status = 'y';               //activate the methods that resposible for it
+                c[index].status = 'y';               //activate the methods that resposible for it
                 break;
             case 3:
                 run = 0; //we want to stop running.
@@ -330,23 +337,22 @@
         int i, flag = 1;
         char userName[50];
         int id, password;
-        Manager m;
         printf("please enter your User Name: ");
         do {
             gets(userName);
-            for (i = 0; i < strlen(userName); i++)
+            for (i = 0; i <= strlen(userName); i++)
             {
                 if ((userName[i] >= 65 && userName[i] <= 122) || userName[i] == ' ')
                 {
-                    if (userName[i] == ' ')
+                    /*if (userName[i] == ' ')
                     {
                         if (i == 0 || i == strlen(userName) - 1)
                         {
                             flag = 0;
 
                         }
-                    }
-                    else if (i == strlen(userName) - 1)
+                    }*/
+                    /*else*/ if (i == strlen(userName) - 1)
                         flag = 1;
                     continue;
                 }
@@ -356,16 +362,14 @@
                 break;
             }
         } while (flag == 0);
-        strcpy(m.name, userName);
-
 
         flag = 1;
         printf("please enter your Id: ");
         do {
-            scanf("%d", id);
+            scanf("%d", &id);
             if (id < 100000000 || id > 999999999)
             {
-                printf("Id must be 9 digits. please tery again ");
+                printf("Id must be 9 digits. please try again\n");
                 flag = 0;
             }
 
@@ -376,10 +380,10 @@
         printf("please enter your Password: ");
         flag = 1;
         do {
-            scanf("%d", password);
+            scanf("%d", &password);
             if (password < 10000 || password > 99999)
             {
-                printf("Password must be 5 digits. please tery again ");
+                printf("Password must be 5 digits. please try again ");
                 flag = 0;
             }
         } while (flag == 0);
@@ -446,6 +450,9 @@
         int i, flag = 0, flag2 = 1, id, password, ManagerIndex;
         char userName[50];
         printf("please enter your Id: ");
+        scanf("%d", &id);
+        printf("please enter your password: ");
+        scanf("%d", &password);
         for (i = 0;i < size;i++)
         {
             if (list[i].id == id)
@@ -485,7 +492,6 @@
 
     void ClubMember(Client* list, int* size,int clientIndex) //לתקן צריך לחפש את הלקוח הספציפי בקובץ
     {
-        int i;
         if (&list[clientIndex].clubMember == 'n')
         {
             char option;
@@ -494,7 +500,7 @@
             printf("1 - no \n ");
             scanf("%c", &option);
             if (option == 0)
-                (list[i].clubMember = 'y');
+                (list[clientIndex].clubMember = 'y');
         }        
     } 
 
