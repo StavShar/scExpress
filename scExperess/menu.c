@@ -62,10 +62,10 @@ void ManagerEntranceLoop(Manager* managers, int* size, float* profit)
         switch (option)
         {//act accordingly:
         case 1:
-            ManagerRegister();
+            ManagerRegister(managers, size);
             //no "break" means continue to login in case 2
         case 2:
-            index = ManagerLogin();
+            index = ManagerLogin(managers, size);
             if (index != -1)
                 ManagerLoop(profit, managers[index]);
             break;
@@ -103,10 +103,10 @@ void ClientEntranceLoop(Client* clients, int* size)
         switch (option)
         {//act accordingly:
         case 1:
-            ClientRegister();
+            ClientRegister(clients, size);
             //no "break" means continue to login in case 2
         case 2:
-            index = ClientLogin();
+            index = ClientLogin(clients, size);
             if (index != -1)
                 ClientLoop(clients[index]);
             break;
