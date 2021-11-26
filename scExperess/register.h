@@ -28,7 +28,7 @@ void ClientLogout();
 Manager* Add_Manager(Manager* list, int* size, char* name, int id, int pas);
 Client* Add_Client(Client* list, int* size, char* name, int id, int pas, char status, char clubmember);
 void ManagerRegister();
-void ManagerLogin();
+int ManagerLogin();
 void ManagerLogout();
 void ActionsOnClient();
 void set_All_Data_Client(Client* list, int size);
