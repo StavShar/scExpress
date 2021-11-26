@@ -1,26 +1,30 @@
 #include "Orders.h"
 
+typedef struct
+{
+	char name[30];
+	int sn;
+	int amount;
+	float price;
+
+}ProductFile;
+
+typedef struct
+{
+	char username[20];
+	int id;
+	int ser;
+	char status;
+	ProductFile* items;
+}orders;
+
 
 /* REMEMBER: free all the allocate memory in the main */
 
 
 //Manager's view of all the orders
-//ptr initialized to 0 at first, to check if there is any history at all
-void ViewOrders(orders* ListOrders, int* ptr)
-{
-	if (*ptr)
-	{
-		FILE* View;
-		char file;
-		View = fopen("HistoryOfAllOrders.csv", "r");
-		while (View != EOF)
-		{
-			//fputc(file, View);
-		}
-	}
-	else
-		puts("There is no history yet.");
-}
+//flag initialized to 0 at first, to check if there is any history at all
+
 
 //The function bascilly adding one order at the time 
 //Flag for poting that if this is the first user or not
@@ -28,23 +32,23 @@ void ViewOrders(orders* ListOrders, int* ptr)
 //pSer is initialized at digit 10000, to make a following serial number
 //username is the name of the customer
 //id is the id number of the customer
-orders MakeOrder(ProductFile* listPro, int* sizep, int orderSN, char* username, int id, char status)
-{
-	orders order;
-	order.username = (char*)malloc((strlen(username) + 1) * sizeof(char));
-	if (order.username == NULL)
-	{
-		printf("Allocate memory failed.\n");
-		exit(1);
-	}
-	strcpy(order.username, username);
-	order.id = id;
-	order.items = listPro;
-	order.serial = orderSN;
-	order.status = status;
-
-	return order;
-}
+//orders MakeOrder(ProductFile* listPro, int* sizep, int orderSN, char* username, int id, char status)
+//{
+//	orders order;
+//	order.username = (char*)malloc((strlen(username) + 1) * sizeof(char));
+//	if (order.username == NULL)
+//	{
+//		printf("Allocate memory failed.\n");
+//		exit(1);
+//	}
+//	strcpy(order.username, username);
+//	order.id = id;
+//	order.items = listPro;
+//	order.serial = orderSN;
+//	order.status = status;
+//
+//	return order;
+//}
 
 orders* Get_All_Waiting_Orders(orders* list, int* size)
 {
@@ -110,7 +114,7 @@ orders* Get_All_Waiting_Orders(orders* list, int* size)
 	return list;
 }
 
-orders* Set_All_Waiting_Orders(orders* list, int size)
+orders* Set_All_Waiting_Orders(orders* list, int* size)
 {
 	FILE* fw;
 
@@ -124,7 +128,7 @@ orders* Set_All_Waiting_Orders(orders* list, int size)
 	{
 		fprintf(fw, "%s,%s,%d,%d,%f,%d,", list[i].username, list[i].id, list[i].serial, list[i].status, list[i].size);
 		for (int j = 0; j < list[i].size; i++)//write items list
-			fprintf(fw, "%s,%d,%d,%f\n", list[i].items->name, list[i].items->sn, list[i].items->amount, list[i].items->price);	
+			fprintf(fw, "%s,%d,%d,%f\n", list[i].items->name, list[i].items->sn, list[i].items->amount, list[i].items->price);
 	}
 	fclose(fw);//close file
 }
@@ -249,28 +253,33 @@ void PrintfProfit(int* pTotalPrice)
 
 }
 
-orders* ChangeStatus(orders* Allorders)
+void ChangeStatus(orders* Allorders, int* size, int sn)
 {
-	int i=0, serial;
+	int i, items = 0;
 	char YN;//Yes and No to approve or cancel
 	puts("Please enter the customer's id: ");
-	scanf("%d", &serial);
-	while (serial != Allorders->id)
+	for (i - 0; i < *size; i++)
 	{
-		puts("Worng id, try again.\n");
+		if (Allorders[i].ser == sn);
+		{
+
+			puts("You wish to confirm or cancel the order?(Y\N)\n");
+			scanf("%c", &YN);
+			if (YN == "Y")
+			{
+				Allorders[i].status = "Y";
+
+			}
+			else
+			{
+				Allorders[i].status = "N";
+			}
+			items = countOrder(Allorders[i].items);
+			orderHistory(Allorders[i].id, Allorders, items, *ptr);
+			Remove_Order(Allorders, *size, sn);
+
+		}
 	}
-	printf("Y = Confrim\nN = Cancel\n");
-	printf("User details:\nName: %s :: ID: %d", Allorders[i].username, Allorders[i].id);
-	scanf("%c", &YN);
-	if (YN == "Y")
-	{
-		Allorders[i].status = "Y";
-	}
-	else
-	{
-		Allorders[i].status = "N";
-	}
-	return Allorders;
 }
 
 //status should get if the order is approved or not 
@@ -278,52 +287,77 @@ orders* ChangeStatus(orders* Allorders)
 //items is the number of the items that in the cart
 //pTotalPrice initialized to 0 at first, to start with 0 profit
 /*----> The user's orders history*/
-void orderHistory(int id, ProductFile* order, int items, char status, int* ptr, float* pTotalPrice)
+//sn is the serial number of the order 
+//sn is the serial number of the order 
+void orderHistory(int id, ProductFile* order, int items, int sn)
 {
-	if (status == "Y")
+	FILE* HisOr;
+	FILE* ManagerHistory;
+	char filename[50];
+	int i;
+	float tp = 0;
+	sprintf(filename, "%d.csv", id);
+	HisOr = fopen(filename, "a");
+	if (!HisOr)
 	{
-		FILE* HisOr;
-		FILE* ManagerHistory;
-		char filename[50];
-		int i;
-		float tp = 0;
-		sprintf(filename, "%d.csv", id);
-		HisOr = fopen(filename, "a");
-		if (!HisOr)
-		{
-			puts("Open file have failed");
-			exit(0);
-		}
-		ManagerHistory = fopen("HistoryOfAllOrders.csv", "a");
-		if (!(ManagerHistory))
-			ManagerHistory = fopen("HistoryOfAllOrders.csv", "a");
-		if (!(ManagerHistory))
-		{
-			puts("Open file have failed");
-			exit(1);
-		}
-
-		fprintf(HisOr, "Product:,Seiral:,Amount:,Price:\n");
-		fprintf(ManagerHistory, "ORDER: %d", *ptr);
-		*ptr++;//Promote the user by one.
-		fprintf(ManagerHistory, "Product:,Seiral:,Amount:,Price:\n");
-
-		for (i = 0; i < items; i++)
-		{
-			fprintf(HisOr, "%s,%d,%d,%.3f\n", order[i].name, order[i].sn, order[i].amount, order[i].price);
-			tp += order[i].price;
-			fprintf(ManagerHistory, "%s,%d,%d,%.3f\n", order[i].name, order[i].sn, order[i].amount, order[i].price);
-			tp += order[i].price;
-		}
-		fprintf(HisOr, "Total:,%f", tp);
-		fprintf(ManagerHistory, "Total:,%f", tp);
-		DailyProfit(pTotalPrice, tp);
-		fclose(HisOr);
-		fclose(ManagerHistory);
+		puts("Open file have failed");
+		exit(0);
 	}
-	else
-		puts("the order is not approved yet");
+	ManagerHistory = fopen("HistoryOfAllOrders.txt", "a");
+
+	if (!(ManagerHistory))
+	{
+		puts("Open file have failed");
+		exit(1);
+	}
+
+	fprintf(HisOr, "Product:,Seiral:,Amount:,Price:\n");
+	fprintf(ManagerHistory, "ORDER:  %d\n", sn);
+	fprintf(ManagerHistory, "Pro:  Ser:  Amo:  Price:\n");
+	for (i = 0; i < items; i++)
+	{
+		fprintf(HisOr, "%s,%d,%d,%.3f\n", order[i].name, order[i].sn, order[i].amount, order[i].price);
+		tp += order[i].price;
+		fprintf(ManagerHistory, "%s  %3d  %3d  %.3f\n", order[i].name, order[i].sn, order[i].amount, order[i].price);
+	}
+	fprintf(HisOr, "Total:,%f\n\n", tp);
+	fprintf(ManagerHistory, "Total:  %.4f\n\n", tp);
+	fclose(HisOr);
+	fclose(ManagerHistory);
 }
+
+void ViewOrder()
+{
+	FILE* fp;
+	char temp = { 0 };
+	fp = fopen("HistoryOfAllOrders.txt", "r");
+	if (!fp)
+	{
+		puts("Can't open file");
+		exit(1);
+	}
+	do
+	{
+		temp = fgetc(fp);
+		printf("%c", temp);
+	} while (temp != EOF);
+	fclose(fp);
+}
+//void PendingOrders(orders* List)
+//{
+//	FILE* fp;
+//	fp = fopen("PendingOrders.csv", "a");
+//	if (!(fp))
+//	{
+//		puts("Can't open file");
+//		exit(1);
+//	}
+//
+//	fprintf(fp, "Name:,ID:,Serial:,Status:\n");
+//	fprintf(fp, "%s,%d,%d,%c\n", List->username, List->id, List->ser, List->status);
+//
+//	fclose(fp);
+//}
 
 int Get_New_Order_SN()
 {
