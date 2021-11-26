@@ -43,55 +43,19 @@
         do {
             flag = 1;
             int count = 0;
-            scanf("%s", id);
-            for (i = 0; i < strlen(id); i++)
-            {
-                if (id[i] >= '0' && id[i] <= '9')
-                {
-                    count++;;
-                }
-                else
-                {
-                    flag = 0;
-                    printf("Id number must be only digits, please try again: ");
-                    break;
-                }
-            }
-            if (count != 9 && flag == 1)
-            {
-                flag = 0;
-                printf("Id number must be 9 digits, please try again: ");
-            }
-        } while (flag == 0);
-        strcpy(c.id,id);
+            scanf("%d", id);
+            if (id>=0 && id<1000000000)
+           
 
 
         printf("please enter your Password: ");
-        do{
             flag = 1;
             int count = 0;
             scanf("%s", password);
-            for (i = 0; i < strlen(password); i++)
-            {
-                if (password[i] >= '0' && password[i] <= '9')
-                {
-                    count++;;
-                }
-                else
-                {
-                    flag = 0;
-                    printf("Password must be only digits, please try again: ");
-                    break;
-                }
-            }
-            if (count > 5 && flag == 1)
-            {
-                flag = 0;
-                printf("Password can not be more than 5 digits, please try again: ");
-            }
-        } while (flag == 0);
-        strcpy(c.password,password);
+            if (password >= 0 && password < 1000000000)
 
+            
+        } while (flag == 0);
         strcpy(c.status, "free 2 buy");
             //write in file
 
