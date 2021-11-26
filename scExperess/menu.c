@@ -135,10 +135,12 @@ void ManagerLoop(float* profit, Manager m)
 {
     Product* products = NULL;
     orders* Orders = NULL;
-    int products_size, Orders_size, sn, tr, rcount;
+    Client* clients = NULL;
+    int products_size, Orders_size, sn, tr, rcount, clients_size;
     int ManagerRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
     products = Get_All_Data(products, &products_size);
+    clients = get_All_Data_Client(clients, &clients_size);
     Orders = Get_All_Waiting_Orders(Orders, &Orders_size);
     while (ManagerRun)
     {  //while we still want to run:
@@ -172,7 +174,7 @@ void ManagerLoop(float* profit, Manager m)
             Set_Rating_vars(tr, rcount);
             break;
         case 7:
-            ActionsOnClient();
+            ActionsOnClient(clients, clients_size);
             break;
         case 8:
             printf("Enter serial number: ");
@@ -195,6 +197,7 @@ void ManagerLoop(float* profit, Manager m)
 
     }//end while(run)
     set_All_Data(products, products_size);
+    set_All_Data_Client(clients, clients_size);
     Set_All_Waiting_Orders(Orders, Orders_size);
 }
 
