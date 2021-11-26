@@ -268,7 +268,7 @@ void ClientLoop(Client c)
             break;
         case 7:
             while (flag) {
-                View_cart(products, products_size, cart, cart_size);
+                View_cart(products, products_size, cart, cart_size, c);
                 printCartMenu();
                 scanf("%d", &option);
                 if (option == 1)
@@ -277,7 +277,7 @@ void ClientLoop(Client c)
                     scanf("%d", &sn);
                     cart = Remove_From_Cart(cart, &cart_size, sn);
                     printf("Your updated cart is:\n");
-                    View_cart(products, products_size, cart, cart_size);
+                    View_cart(products, products_size, cart, cart_size, c);
                     flag = 0;
                 }
                 else if (option == 2)
