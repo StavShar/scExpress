@@ -12,6 +12,7 @@
         int i, flag = 1,id,password;
         char userName[50];
         char clubMember,status;
+        printf("                        ---CLIENT REGISTRATION--- \n");
         printf("please enter your User Name: ");
         do {
             gets(userName);
@@ -128,6 +129,7 @@
         int i, flag = 0,flag2=1, id, password, clientIndex;
         char userName[50];
         char clubMember;
+        printf("                        ---CLIENT LOG IN--- \n");
         printf("please enter your Id: ");
         scanf("%d", &id);
         printf("please enter your password: ");
@@ -309,7 +311,7 @@
             newlist[i].clubMember = list[i].clubMember;
         }
 
-        //add new product
+        //add 
         newlist[*size].name = (char*)malloc((strlen(name) + 1) * sizeof(char));
         if (newlist[*size].name == NULL)
         {
@@ -337,35 +339,13 @@
         int i, flag = 1;
         char userName[50];
         int id, password;
+        printf("                        ---MANAGER REGISTRATION--- \n");
         printf("please enter your User Name: ");
-        do {
             getchar();
             gets(userName);
             
-            for (i = 0; i <= strlen(userName); i++)
-            {
-                if ((userName[i] >= 65 && userName[i] <= 122) || userName[i] == ' ')
-                {
-                    /*if (userName[i] == ' ')
-                    {
-                        if (i == 0 || i == strlen(userName) - 1)
-                        {
-                            flag = 0;
 
-                        }
-                    }*/
-                    /*else*/ if (i == strlen(userName) - 1)
-                        flag = 1;
-                    continue;
-                }
-
-                printf("Your User Name must be your full name, only letters are allowed, please try again: \n");
-                flag = 0;
-                break;
-            }
-        } while (flag == 0);
-
-        flag = 1;
+        
         printf("please enter your Id: ");
         do {
             scanf("%d", &id);
@@ -374,6 +354,8 @@
                 printf("Id must be 9 digits. please try again\n");
                 flag = 0;
             }
+            else 
+                flag = 1;
 
         } while (flag == 0);
 
@@ -387,7 +369,10 @@
             {
                 printf("Password must be 5 digits. please try again ");
                 flag = 0;
+
             }
+            else 
+                flag = 1;
         } while (flag == 0);
 
         list = Add_Manager(list, size, userName, id, password);
@@ -451,6 +436,7 @@
     {
         int i, flag = 0, flag2 = 1, id, password, ManagerIndex;
         char userName[50];
+        printf("                        ---MANAGER LOG IN--- \n");
         printf("please enter your Id: ");
         scanf("%d", &id);
         printf("please enter your password: ");

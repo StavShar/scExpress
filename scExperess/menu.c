@@ -82,7 +82,7 @@ void ManagerEntranceLoop(Manager* managers, int* size, float* profit)
 //A function that print the menu to screen.
 void printManagerEntranceOptions()
 {
-    printf("                            Welcome Manager:\nPlease choose one of the following options:\n Press\n");
+    printf("                              MNAGER MENU:\nPlease choose one of the following options:\n Press\n");
     printf("----------------------------------------------------------------------\n");
     printf("1- Regiter\n");
     printf("2- Log in\n");
@@ -123,7 +123,7 @@ void ClientEntranceLoop(Client* clients, int* size)
 //A function that print the menu to screen.
 void printClientEntranceOptions()
 {
-    printf("                            Welcome Costumer:\nPlease choose one of the following options:\n Press\n");
+    printf("                              COSTUMER MENU:\nPlease choose one of the following options:\n Press\n");
     printf("----------------------------------------------------------------------\n");
     printf("1- Regiter\n");
     printf("2- Log in\n");
