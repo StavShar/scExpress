@@ -1,7 +1,5 @@
 #include "Cart.h"
-#include "Orders.h"
 #include "Orders_user.h"
-#include "Product.h"
 #include "register.h"
 #include "searchProduct.h"
 
