@@ -62,11 +62,9 @@ void ManagerEntranceLoop(Manager* managers, int* size, float* profit)
         {//act accordingly:
         case 1:
             ManagerRegister();
-            //activate the methods that resposible for it
-            break;//end of this iteration
+            //no "break" means continue to login in case 2
         case 2:
-            ManagerLogin();
-            ManagerLoop(profit);
+            ManagerLoop(profit, managers[ManagerLogin()]);
             break;
         case 3:
             ManagerEntranceRun = 0; //we want to stop running.
@@ -93,6 +91,8 @@ void ClientEntranceLoop(Client* clients, int* size)
 {
     int ClientEntranceRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
+    int index;
+    Client c;
     while (ClientEntranceRun)
     {  //while we still want to run:
         printClientEntrancOptions();//print the menu
@@ -101,16 +101,11 @@ void ClientEntranceLoop(Client* clients, int* size)
         {//act accordingly:
         case 1:
             ClientRegister();
-            //activate the methods that resposible for it
-            break;//end of this iteration
+            //no "break" means continue to login in case 2
         case 2:
-            if (ClientLogin() == 1)
-            {
-                ClientLoop();
-            }
-            ClientEntranceLoop(clients, size);// ????
-
-
+            index = ClientLogin();
+            if (index != -1)
+                ClientLoop(clients[index]);
             break;
         case 3:
             ClientEntranceRun = 0; //we want to stop running.
@@ -133,7 +128,7 @@ void printClientEntranceOptions()
     printf("----------------------------------------------------------------------\n");
 }//end method printOptions()
 
-void ManagerLoop(int* profit)
+void ManagerLoop(float* profit, Manager m)
 {
     Product* products;
     orders* Orders;
@@ -182,7 +177,7 @@ void ManagerLoop(int* profit)
             Discount_Product(products, products_size, sn);
             break;
         case 9:
-            DailyProfit(profit,);
+            DailyProfit(profit,);///??
             break;
         case 10:
             Print_All_Products(products, products_size);
@@ -219,12 +214,13 @@ void printManagerOptions()
     printf("----------------------------------------------------------------------\n");
 }//end method printManagerOptions()
 
-void ClientLoop()
+void ClientLoop(Client c)
 {
     Product* products;
+    ProductFile* pf;
     orders* Orders;
     Cart cart;
-    int products_size, Orders_size, cart_size, sn, quantity, tr, rcount;
+    int products_size, Orders_size, cart_size, sn, quantity, tr, rcount, flag;
     int ClientRun = 1, option;
     char name[50];
     products = Get_All_Data(products, &products_size);
@@ -236,7 +232,7 @@ void ClientLoop()
         scanf("%d", &option);//get the user choise
         switch (option)
         {//act accordingly:
-        case 1:orderHistory();
+        case 1:orderHistory(/*c.id, Checkout(products, products_size, cart, cart_size), cart_size, sn*/);
             //activate the functions that resposible for it
             break;//end of this iteration
         case 2:
@@ -264,7 +260,30 @@ void ClientLoop()
             cart = Add_To_Cart(products, products_size,cart,&cart_size,sn,quantity);
             break;
         case 7:
-            View_cart(products, products_size, cart, cart_size);
+            while (flag) {
+                View_cart(products, products_size, cart, cart_size);
+                printCartMenu();
+                scanf("%d", &option);
+                if (option == 1)
+                {
+                    printf("Enter serial number of product you want to remove from cart: ");
+                    scanf("%d", &sn);
+                    cart = Remove_From_Cart(cart, &cart_size, sn);
+                    printf("Your updated cart is:\n");
+                    View_cart(products, products_size, cart, cart_size);
+                    flag = 0;
+                }
+                else if (option == 2)
+                {
+                    pf = Checkout(products, products_size, cart, cart_size);
+                    Orders = Add_Order(Orders, &Orders_size, MakeOrder(pf, cart_size, Get_New_Order_SN(), c.name, c.id, 'w'));
+                    flag = 0;
+                }
+                else if (option == 3)
+                    flag = 0;
+                else
+                    printf("Wrong number, please try again\n");                
+            }
             break;
         case 8:
             Get_Rating_vars(&tr, &rcount);
@@ -280,6 +299,14 @@ void ClientLoop()
     }//end while(run)
     set_All_Data(products, products_size);
     Set_All_Waiting_Orders(Orders, Orders_size);
+}
+
+void printCartMenu()
+{
+    printf("1- Remove product\n");
+    printf("2- Buy cart\n");//ask for delivery
+    printf("3- Back\n");
+
 }
 
 //A function that print the menu to screen.
