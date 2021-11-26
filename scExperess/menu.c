@@ -54,6 +54,7 @@ void ManagerEntranceLoop(Manager* managers, int* size, float* profit)
 {
     int ManagerEntranceRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
+    int index;
     while (ManagerEntranceRun)
     {  //while we still want to run:
         printGeneralOptions();//print the menu
@@ -64,7 +65,9 @@ void ManagerEntranceLoop(Manager* managers, int* size, float* profit)
             ManagerRegister();
             //no "break" means continue to login in case 2
         case 2:
-            ManagerLoop(profit, managers[ManagerLogin()]);
+            index = ManagerLogin();
+            if (index != -1)
+                ManagerLoop(profit, managers[index]);
             break;
         case 3:
             ManagerEntranceRun = 0; //we want to stop running.
