@@ -236,9 +236,10 @@ void PrintfProfit(int* pTotalPrice)
 
 }
 
-void ChangeStatus(orders* Allorders, int* size, int sn)
+float ChangeStatus(orders* Allorders, int* size, int sn)
 {
 	int i, items = 0;
+	float tp = 0;
 	char YN;//Yes and No to approve or cancel
 	puts("Please enter the customer's id: ");
 	for (i = 0; i < *size; i++)
@@ -258,11 +259,12 @@ void ChangeStatus(orders* Allorders, int* size, int sn)
 				Allorders[i].status = "N";
 			}
 			items = countOrder(Allorders[i].items);
-			orderHistory(Allorders[i].id, Allorders, items, sn);
+			tp = orderHistory(Allorders[i].id, Allorders, items, sn);
 			Remove_Order(Allorders, size, sn);
 
 		}
 	}
+	return tp;
 }
 
 //status should get if the order is approved or not 
@@ -272,7 +274,7 @@ void ChangeStatus(orders* Allorders, int* size, int sn)
 /*----> The user's orders history*/
 //sn is the serial number of the order 
 //sn is the serial number of the order 
-void orderHistory(int id, ProductFile* order, int items, int sn)
+float orderHistory(int id, ProductFile* order, int items, int sn)
 {
 	FILE* HisOr;
 	FILE* ManagerHistory;
@@ -307,6 +309,7 @@ void orderHistory(int id, ProductFile* order, int items, int sn)
 	fprintf(ManagerHistory, "Total:  %.4f\n\n", tp);
 	fclose(HisOr);
 	fclose(ManagerHistory);
+	return tp;
 }
 
 void ViewOrder()
