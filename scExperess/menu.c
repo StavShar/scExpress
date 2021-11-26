@@ -6,8 +6,8 @@
 
 void mainMenu()
 {
-    Manager* managers;
-    Client* clients;
+    Manager* managers = NULL;
+    Client* clients = NULL;
     int managers_size, clients_size;
     int GeneralRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
@@ -54,6 +54,7 @@ void ManagerEntranceLoop(Manager* managers, int* size, float* profit)
 {
     int ManagerEntranceRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
+    int index;
     while (ManagerEntranceRun)
     {  //while we still want to run:
         printGeneralOptions();//print the menu
@@ -64,7 +65,9 @@ void ManagerEntranceLoop(Manager* managers, int* size, float* profit)
             ManagerRegister();
             //no "break" means continue to login in case 2
         case 2:
-            ManagerLoop(profit, managers[ManagerLogin()]);
+            index = ManagerLogin();
+            if (index != -1)
+                ManagerLoop(profit, managers[index]);
             break;
         case 3:
             ManagerEntranceRun = 0; //we want to stop running.
@@ -130,8 +133,8 @@ void printClientEntranceOptions()
 
 void ManagerLoop(float* profit, Manager m)
 {
-    Product* products;
-    orders* Orders;
+    Product* products = NULL;
+    orders* Orders = NULL;
     int products_size, Orders_size, sn, tr, rcount;
     int ManagerRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
@@ -161,7 +164,7 @@ void ManagerLoop(float* profit, Manager m)
         case 5:
             printf("Enter serial number: ");
             scanf("%d", &sn);
-            ChangeStatus(Orders, &Orders_size, sn);
+            (*profit) += ChangeStatus(Orders, &Orders_size, sn);
             break;
         case 6:
             Get_Rating_vars(&tr, &rcount);
@@ -177,7 +180,7 @@ void ManagerLoop(float* profit, Manager m)
             Discount_Product(products, products_size, sn);
             break;
         case 9:
-            DailyProfit(profit,);///??
+            PrintfProfit(profit);
             break;
         case 10:
             Print_All_Products(products, products_size);
@@ -216,11 +219,11 @@ void printManagerOptions()
 
 void ClientLoop(Client c)
 {
-    Product* products;
-    ProductFile* pf;
-    orders* Orders;
+    Product* products = NULL;
+    ProductFile* pf = NULL;
+    orders* Orders = NULL;
     Cart cart;
-    int products_size, Orders_size, cart_size, sn, quantity, tr, rcount, flag;
+    int products_size, Orders_size, cart_size, sn, quantity, tr, rcount, flag = 1;
     int ClientRun = 1, option;
     char name[50];
     products = Get_All_Data(products, &products_size);
@@ -232,7 +235,8 @@ void ClientLoop(Client c)
         scanf("%d", &option);//get the user choise
         switch (option)
         {//act accordingly:
-        case 1:orderHistory(/*c.id, Checkout(products, products_size, cart, cart_size), cart_size, sn*/);
+        case 1:
+            ViewOrder();
             //activate the functions that resposible for it
             break;//end of this iteration
         case 2:
