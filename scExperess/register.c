@@ -131,7 +131,7 @@
         printf("please enter your Id: ");
         for (i = 0;i < size;i++)
         {
-            if (&list[i].id == id)
+            if (list[i].id == id)
             {
                 flag = 1;
                 clientIndex = i;
@@ -145,25 +145,24 @@
         }
 
         printf("please enter your User Name: ");
-            if (strcpy(& list[clientIndex].name, userName)!=0)
+            if (strcpy(list[clientIndex].name, userName)!=0)
             {
                 printf("User name does not exists");
                 return -1;
             }
         
             printf("please enter your password: ");
-            if (&list[clientIndex].password != password)
+            if (list[clientIndex].password != password)
             {
                 printf("this password does not match your user details");
                 return -1;
             }
         
-        if (&list[clientIndex].status=='n')
+        if (list[clientIndex].status=='n')
         {
             printf("This user is blocked. Please contact management for more details");
             return -1;
         }
-
         ClubMember(list, size, clientIndex);
 
             return clientIndex;
@@ -449,7 +448,7 @@
         printf("please enter your Id: ");
         for (i = 0;i < size;i++)
         {
-            if (&list[i].id == id)
+            if (list[i].id == id)
             {
                 flag = 1;
                 ManagerIndex = i;
@@ -463,14 +462,14 @@
         }
 
         printf("please enter your User Name: ");
-        if (strcpy(&list[ManagerIndex].name, userName) != 0)
+        if (strcpy(list[ManagerIndex].name, userName) != 0)
         {
             printf("User name does not exists");
             return -1;
         }
 
         printf("please enter your password: ");
-        if (&list[ManagerIndex].password != password)
+        if (list[ManagerIndex].password != password)
         {
             printf("this password does not match your user details");
             return -1;
@@ -484,8 +483,9 @@
 
     //switchcase
 
-    int ClubMember(Client* list, int* size,int clientIndex) //לתקן צריך לחפש את הלקוח הספציפי בקובץ
+    void ClubMember(Client* list, int* size,int clientIndex) //לתקן צריך לחפש את הלקוח הספציפי בקובץ
     {
+        int i;
         if (&list[clientIndex].clubMember == 'n')
         {
             char option;
@@ -493,24 +493,9 @@
             printf("0 - yes \n ");
             printf("1 - no \n ");
             scanf("%c", &option);
-            if (option == '0')
-            {
-                FILE* fw;
-                fw = fopen("Clients.csv", "a");//open file for writing
-                if (fw == NULL)
-                {
-                    printf("Error!! file can't be opened\n");
-                    exit(1);
-                }
-                fprintf(fw, "%c\n", list[clientIndex].clubMember);
-                fclose(fw);//close file
-            }
-            return 1;
-        }
-                else
-                    return 0;
-
-                // do a discount        
+            if (option == 0)
+                (list[i].clubMember = 'y');
+        }        
     } 
 
 
