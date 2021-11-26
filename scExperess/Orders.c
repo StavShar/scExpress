@@ -259,7 +259,7 @@ void ChangeStatus(orders* Allorders, int* size, int sn)
 			}
 			items = countOrder(Allorders[i].items);
 			orderHistory(Allorders[i].id, Allorders, items, sn);
-			Remove_Order(Allorders, *size, sn);
+			Remove_Order(Allorders, size, sn);
 
 		}
 	}

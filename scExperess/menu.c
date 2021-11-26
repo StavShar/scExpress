@@ -161,10 +161,12 @@ void ManagerLoop(int* profit)
             Update_Price(products, products_size, sn);
             break;
         case 4:
-            ViewOrders();
+            ViewOrder();
             break;
         case 5:
-            ChangeStatus();
+            printf("Enter serial number: ");
+            scanf("%d", &sn);
+            ChangeStatus(Orders, &Orders_size, sn);
             break;
         case 6:
             Get_Rating_vars(&tr, &rcount);
