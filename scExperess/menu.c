@@ -8,7 +8,7 @@ void mainMenu()
 {
     Manager* managers = NULL;
     Client* clients = NULL;
-    int managers_size, clients_size;
+    int managers_size = 0, clients_size = 0;
     int GeneralRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
     float profit = 0.0;
@@ -57,7 +57,7 @@ void ManagerEntranceLoop(Manager* managers, int* size, float* profit)
     int index;
     while (ManagerEntranceRun)
     {  //while we still want to run:
-        printGeneralOptions();//print the menu
+        printManagerEntranceOptions();//print the menu
         scanf("%d", &option);//get the user choise
         switch (option)
         {//act accordingly:
@@ -136,7 +136,7 @@ void ManagerLoop(float* profit, Manager m)
     Product* products = NULL;
     orders* Orders = NULL;
     Client* clients = NULL;
-    int products_size, Orders_size, sn, tr, rcount, clients_size;
+    int products_size = 0, Orders_size = 0, sn, tr, rcount, clients_size = 0;
     int ManagerRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
     products = Get_All_Data(products, &products_size);
@@ -226,7 +226,7 @@ void ClientLoop(Client c)
     ProductFile* pf = NULL;
     orders* Orders = NULL;
     Cart cart;
-    int products_size, Orders_size, cart_size, sn, quantity, tr, rcount, flag = 1;
+    int products_size = 0, Orders_size = 0, cart_size = 0, sn, quantity, tr, rcount, flag = 1;
     int ClientRun = 1, option;
     char name[50];
     products = Get_All_Data(products, &products_size);
@@ -350,8 +350,6 @@ void ActionsOnProducts(Product* list, int* size)
     }
 }
     
-
-
 //A function that print the menu to screen.
 void printClientOptions()
 {

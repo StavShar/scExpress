@@ -339,7 +339,9 @@
         int id, password;
         printf("please enter your User Name: ");
         do {
+            getchar();
             gets(userName);
+            
             for (i = 0; i <= strlen(userName); i++)
             {
                 if ((userName[i] >= 65 && userName[i] <= 122) || userName[i] == ' ')
@@ -357,7 +359,7 @@
                     continue;
                 }
 
-                printf("Your User Name must be your full name, only letters are allowed, please try again: ");
+                printf("Your User Name must be your full name, only letters are allowed, please try again: \n");
                 flag = 0;
                 break;
             }
