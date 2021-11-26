@@ -22,17 +22,15 @@ typedef struct
 } Manager;
 
 //Client Register(Members* list, int size, int sn);
-void ClientRegister();
-int ClientLogin();
-void ClientLogout();
+void ClientRegister(Client* list, int* size);
+int ClientLogin(Client* list, int* size);
 Manager* Add_Manager(Manager* list, int* size, char* name, int id, int pas);
 Client* Add_Client(Client* list, int* size, char* name, int id, int pas, char status, char clubmember);
-void ManagerRegister();
-int ManagerLogin();
-void ManagerLogout();
+void ManagerRegister(Manager* list, int* size);
+int ManagerLogin(Manager* list, int* size);
 void ActionsOnClient();
 void set_All_Data_Client(Client* list, int size);
 Client* get_All_Data_Client(Client* list, int* size);
 void set_All_Data_Manager(Manager* list, int size);
 Manager* get_All_Data_Manager(Manager* list, int* size);
-int ClubMember(Client c);
+int ClubMember(Client* list, int* size, int clientIndex);
