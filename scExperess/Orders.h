@@ -30,6 +30,6 @@ void PrintfProfit(int* pTotalPrice);
 int Get_New_Order_SN();
 
 orders MakeOrder(ProductFile* listPro, int* sizep, int orderSN, char* username, int id, char status);
-void ViewOrders(orders* ListOrders, int* ptr);
-orders* ChangeStatus(orders* Allorders);
-void orderHistory(int id, ProductFile* order, int items, char status, int* ptr, float* pTotalPrice);
+void ViewOrder();
+void ChangeStatus(orders* Allorders, int* size, int sn);
+void orderHistory(int id, ProductFile* order, int items, int sn);

@@ -1,22 +1,5 @@
 #include "Orders.h"
 
-typedef struct
-{
-	char name[30];
-	int sn;
-	int amount;
-	float price;
-
-}ProductFile;
-
-typedef struct
-{
-	char username[20];
-	int id;
-	int ser;
-	char status;
-	ProductFile* items;
-}orders;
 
 
 /* REMEMBER: free all the allocate memory in the main */
@@ -32,23 +15,23 @@ typedef struct
 //pSer is initialized at digit 10000, to make a following serial number
 //username is the name of the customer
 //id is the id number of the customer
-//orders MakeOrder(ProductFile* listPro, int* sizep, int orderSN, char* username, int id, char status)
-//{
-//	orders order;
-//	order.username = (char*)malloc((strlen(username) + 1) * sizeof(char));
-//	if (order.username == NULL)
-//	{
-//		printf("Allocate memory failed.\n");
-//		exit(1);
-//	}
-//	strcpy(order.username, username);
-//	order.id = id;
-//	order.items = listPro;
-//	order.serial = orderSN;
-//	order.status = status;
-//
-//	return order;
-//}
+orders MakeOrder(ProductFile* listPro, int* sizep, int orderSN, char* username, int id, char status)
+{
+	orders order;
+	order.username = (char*)malloc((strlen(username) + 1) * sizeof(char));
+	if (order.username == NULL)
+	{
+		printf("Allocate memory failed.\n");
+		exit(1);
+	}
+	strcpy(order.username, username);
+	order.id = id;
+	order.items = listPro;
+	order.serial = orderSN;
+	order.status = status;
+
+	return order;
+}
 
 orders* Get_All_Waiting_Orders(orders* list, int* size)
 {
@@ -114,7 +97,7 @@ orders* Get_All_Waiting_Orders(orders* list, int* size)
 	return list;
 }
 
-orders* Set_All_Waiting_Orders(orders* list, int* size)
+orders* Set_All_Waiting_Orders(orders* list, int size)
 {
 	FILE* fw;
 
@@ -258,9 +241,9 @@ void ChangeStatus(orders* Allorders, int* size, int sn)
 	int i, items = 0;
 	char YN;//Yes and No to approve or cancel
 	puts("Please enter the customer's id: ");
-	for (i - 0; i < *size; i++)
+	for (i = 0; i < *size; i++)
 	{
-		if (Allorders[i].ser == sn);
+		if (Allorders[i].serial == sn);
 		{
 
 			puts("You wish to confirm or cancel the order?(Y\N)\n");
@@ -275,7 +258,7 @@ void ChangeStatus(orders* Allorders, int* size, int sn)
 				Allorders[i].status = "N";
 			}
 			items = countOrder(Allorders[i].items);
-			orderHistory(Allorders[i].id, Allorders, items, *ptr);
+			orderHistory(Allorders[i].id, Allorders, items, sn);
 			Remove_Order(Allorders, *size, sn);
 
 		}
