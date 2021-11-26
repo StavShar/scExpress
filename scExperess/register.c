@@ -6,7 +6,7 @@
 
 
     //client register
-    void ClientRegister()
+    void ClientRegister(Client* list,int* size)
     {
         
         int i, flag = 1,id,password;
@@ -65,11 +65,7 @@
         clubMember = 'n';
         status = 'y';
         
-        Client* list = NULL;
-        static int size = 1;
-        set_All_Data_Client(list,size);
-        Add_Client(list, size,userName,id,password,status,clubMember);
-          ClientLogin(list[size-1]); //go to login
+        list=Add_Client(list, size,userName,id,password,status,clubMember);
     }
 
 
@@ -127,10 +123,16 @@
     }
     
     //client login
-    int ClientLogin(Client c)
+    int ClientLogin(Client* list, int* size)
     {
-        int i, flag = 1,flag2=1;
-        char userName[50], id[50], password[50],clubMember[50];
+        int i, flag = 1,flag2=1, id, password;
+        char userName[50];
+        char clubMember;
+        printf("please enter your Id: ");
+        for (i = 0;i < size;i++)
+        {
+            if()
+        }
         printf("please enter your User Name: ");
         do {
             gets(userName);
@@ -145,7 +147,7 @@
         } while (flag == 0);
 
         flag = 1;
-        printf("please enter your Id: ");
+        
         do {
             scanf("%d", id);
             if (id==c.id)
@@ -181,15 +183,15 @@
             } while (flag == 0);
             if (ClubMember(c)==1)
 
-            return 1;
+            return i;
         }
-        else return 0;
+        else return -1;
     }
 
     //switchcase
 
      //actions on a client
-    void ActionsOnClient(Client c)
+    void ActionsOnClient()
     {
         int i, flag = 1;
         char userName[50];
@@ -463,7 +465,7 @@
 
 
     //manager login
-    void ManagerLogin()
+    int ManagerLogin(Manager m)
     {
         int i, flag = 1;
         char userName[100];
@@ -485,8 +487,8 @@
         flag = 1;
         printf("please enter your Id: ");
         do {
-            scanf("%s", id);
-            if (strcmp(id, m.id) == 0)
+            scanf("%d", id);
+            if (id == m.id)
             {
                 flag = 1;
                 continue;
@@ -495,28 +497,24 @@
             printf("Wrong Id, please try again: ");
         } while (flag == 0);
 
+            flag = 1;
+            printf("please enter your Password: ");
+            do {
+                scanf("%d", password);
+                if (password == m.password)
+                {
+                    flag = 1;
+                    continue;
+                }
+                flag = 0;
+                printf("Wrong Password, please try again: ");
+            } while (flag == 0);
 
-        flag = 1;
-        printf("please enter your Password: ");
-        do {
-            scanf("%s", password);
-            if (strcmp(password, m.password) == 0)
-            {
-                flag = 1;
-                continue;
-            }
-            flag = 0;
-            printf("Wrong Password, please try again: ");
-        } while (flag == 0);
-
+                return i;
+        
     }
     //switchcase
 
-
-    void ManagerLogout()
-    {
-        //end switchcase exit system go to manager/client menu
-    }
 
     //switchcase
 
