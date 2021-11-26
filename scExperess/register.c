@@ -8,9 +8,10 @@
     //client register
     void ClientRegister()
     {
-        int i, flag = 1;
-        char userName[50], id[50], password[50],status[50];
-        Client c;
+        
+        int i, flag = 1,id,password;
+        char userName[50];
+        char clubMember,status;
         printf("please enter your User Name: ");
         do {
             gets(userName);
@@ -36,34 +37,39 @@
                 break;
             }
         } while (flag == 0);
-        strcpy(c.name, userName);
 
-
+        flag = 1;
         printf("please enter your Id: ");
         do {
-            flag = 1;
-            int count = 0;
             scanf("%d", id);
-            if (id>=0 && id<1000000000)
+            if (id < 100000000 || id > 999999999)
+            {
+                printf("Id must be 9 digits. please tery again ");
+                flag = 0;
+                }
+
+        } while (flag == 0);
            
 
 
         printf("please enter your Password: ");
-            flag = 1;
-            int count = 0;
-            scanf("%s", password);
-            if (password >= 0 && password < 1000000000)
-
-            
+        flag = 1;
+        do{
+            scanf("%d", password);
+            if (password < 10000 || password > 99999)
+            {
+                printf("Password must be 5 digits. please tery again ");
+                flag = 0;
+            }
         } while (flag == 0);
-        strcpy(c.status, "free 2 buy");
-            //write in file
-
-        strcpy(c.clubMember, "not a club member");
-        //write in file
-
-
-          ClientLogin(c); //go to login
+        clubMember = 'n';
+        status = 'y';
+        
+        Client* list = NULL;
+        static int size = 1;
+        set_All_Data_Client(list,size);
+        Add_Client(list, size,userName,id,password,status,clubMember);
+          ClientLogin(list[size-1]); //go to login
     }
 
 
@@ -121,7 +127,7 @@
     }
     
     //client login
-    int ClientLogin()
+    int ClientLogin(Client c)
     {
         int i, flag = 1,flag2=1;
         char userName[50], id[50], password[50],clubMember[50];
@@ -141,8 +147,8 @@
         flag = 1;
         printf("please enter your Id: ");
         do {
-            scanf("%s", id);
-            if (strcmp(id, c.id) == 0)
+            scanf("%d", id);
+            if (id==c.id)
             {
                 flag = 1;
                 continue;
@@ -151,7 +157,7 @@
             printf("Wrong Id, please try again: ");
         } while (flag == 0);
         
-        if (strcmp(c.status, "blocked") == 0)
+        if (c.status=='n')
         {
             flag2 = 0;
             printf("This user is blocked. Please contact management for more details");
@@ -164,8 +170,8 @@
             flag = 1;
             printf("please enter your Password: ");
             do {
-                scanf("%s", password);
-                if (strcmp(password, c.password) == 0)
+                scanf("%d", password);
+                if (password==c.password)
                 {
                     flag = 1;
                     continue;
@@ -173,7 +179,8 @@
                 flag = 0;
                 printf("Wrong Password, please try again: ");
             } while (flag == 0);
-            ClubMember(c);
+            if (ClubMember(c)==1)
+
             return 1;
         }
         else return 0;
@@ -185,15 +192,16 @@
     void ActionsOnClient(Client c)
     {
         int i, flag = 1;
-        char userName[50], id[50], password[50];
+        char userName[50];
+        int id, password;
         printf("Please enter client's details: ");
         printf("Name: ");
         do {
             printf("User Name: ");
             gets(userName);
             printf("Id: ");
-            scanf("%s", id);
-            if (strcmp(userName, c.name) == 0 && strcmp(id, c.id) == 0)
+            scanf("%d", id);
+            if (strcmp(userName, c.name) == 0 && id== c.id)
             {
                 flag = 1;
                 continue;
@@ -202,21 +210,41 @@
             printf("User Name or Id are Incorrect , please try again: ");
 
         } while (flag == 0);
-        printf("Id: ");
-
         //switchcase block un block
+        int run = 1,option;
+        while (run)
+        {  //while we still want to run:
+            printBlockOptions();//print the menu
+            scanf("%d", &option);//get the user choise
+            switch (option)
+            {//act accordingly:
+            case 1:
+                c.status = 'n';               //activate the methods that resposible for it
+                break;//end of this iteration
+            case 2:
+                c.status = 'y';               //activate the methods that resposible for it
+                break;
+            case 3:
+                run = 0; //we want to stop running.
+                printf("The system closed successfully\n");
+                break;
+            default: printf("Wrong option. Please try again!\n"); //not a supported option
+            }//end switch
 
-        //case block
-        strcpy(c.status, "blocked");
-
-        //case unblock
-        strcpy(c.status, "free 2 buy");
+        }//end while(run)
     }
 
-    void ClientLogout() 
+    //A function that print the menu to screen.
+    void printBlockOptions()
     {
-        //end switchcase exit system go to manager/client menu
-    }
+        printf("Please choose one of the following options:\n Press\n");
+        printf("----------------------------------------------------------------------\n");
+        printf("1- Block this user\n");
+        printf("2- Unblock this user\n");
+        printf("3- Exit\n");
+        printf("----------------------------------------------------------------------\n");
+    }//end method printManagerOptions()
+    
 
     //adding manager into the manager's list
     Manager* Add_Manager(Manager* list, int* size, char* name, int id, int pas)
@@ -318,7 +346,8 @@
     void ManagerRegister()
     {
         int i, flag = 1;
-        char userName[50], id[50], password[50];
+        char userName[50];
+        int id, password;
         Manager m;
         printf("please enter your User Name: ");
         do {
@@ -348,59 +377,35 @@
         strcpy(m.name, userName);
 
 
+        flag = 1;
         printf("please enter your Id: ");
         do {
-            flag = 1;
-            int count = 0;
-            scanf("%s", id);
-            for (i = 0; i < strlen(id); i++)
+            scanf("%d", id);
+            if (id < 100000000 || id > 999999999)
             {
-                if (id[i] >= '0' && id[i] <= '9')
-                {
-                    count++;;
-                }
-                else
-                {
-                    flag = 0;
-                    printf("Id number must be only digits, please try again: ");
-                    break;
-                }
-            }
-            if (count != 9 && flag == 1)
-            {
+                printf("Id must be 9 digits. please tery again ");
                 flag = 0;
-                printf("Id number must be 9 digits, please try again: ");
             }
+
         } while (flag == 0);
-        strcpy(m.id, id);
+
 
 
         printf("please enter your Password: ");
+        flag = 1;
         do {
-            flag = 1;
-            int count = 0;
-            scanf("%s", password);
-            for (i = 0; i < strlen(password); i++)
+            scanf("%d", password);
+            if (password < 10000 || password > 99999)
             {
-                if (password[i] >= '0' && password[i] <= '9')
-                {
-                    count++;;
-                }
-                else
-                {
-                    flag = 0;
-                    printf("Password must be only digits, please try again: ");
-                    break;
-                }
-            }
-            if (count > 5 && flag == 1)
-            {
+                printf("Password must be 5 digits. please tery again ");
                 flag = 0;
-                printf("Password can not be more than 5 digits, please try again: ");
             }
         } while (flag == 0);
-        strcpy(m.password, password);
 
+        Manager* list = NULL;
+        static int size = 1;
+        set_All_Data_Client(list, size);
+        Add_Manager(list, size, userName, id, password);
         ManagerLogin(m); //go to login
 
     }
@@ -515,21 +520,35 @@
 
     //switchcase
 
-    void ClubMember(Client c)
+    int ClubMember(Client c) //לתקן צריך לחפש את הלקוח הספציפי בקובץ
     {
-        if (strcpy(c.clubMember, "club member") != 0)
+        if (c.clubMember == 'n')
         {
             char option;
-            printf("do you want to be a club member? choose one of the options: \n ");
+            printf("do you want to be a club member? choose one of the following options: \n ");
             printf("0 - yes \n ");
             printf("1 - no \n ");
             scanf("%c", &option);
             if (option == '0')
-                strcpy(c.clubMember, "club member");
+            {
+                FILE* fw;
+                fw = fopen("Clients.csv", "w");//open file for writing
+                if (fw == NULL)
+                {
+                    printf("Error!! file can't be opened\n");
+                    exit(1);
+                }
+                for (int i = 0; i < size; i++)
+                    fprintf(fw, "%s,%d,%d,%c,%c\n", list[i].name, list[i].id, list[i].password, list[i].status, list[i].clubMember);
+                fclose(fw);//close file
+                return 1;
+                else
+                    return 0;
 
-            // do a discount
+                // do a discount
+            }
         }
-    }
+    } 
 
 
 
