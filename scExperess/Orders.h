@@ -6,6 +6,7 @@ typedef struct
 	int sn;
 	int amount;
 	float price;
+
 }ProductFile;
 
 typedef struct
@@ -21,7 +22,7 @@ typedef struct
 
 
 orders* Get_All_Waiting_Orders(orders* list, int* size);
-orders* Set_All_Waiting_Orders(orders* list, int* size);
+orders* Set_All_Waiting_Orders(orders* list, int size);
 orders* Add_Order(orders* list, int* size, orders order);
 orders* Remove_Order(orders* list, int* size, int orderSN);
 int DailyProfit(float* pTotalPrice, float tp);

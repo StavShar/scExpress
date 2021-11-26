@@ -61,12 +61,12 @@ void Website_ranking(int* total ,int* count)
     
     if(number > 0 && number <= 5)
     {
-        *total+= number;
-        *count = *count + 1;
+        (*total)+= number;
+        (*count)++;
     }
     else
     {
-        printf("wrong number");
+        printf("wrong number\n");
     }
     
 }
