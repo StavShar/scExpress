@@ -29,6 +29,7 @@ Client* Add_Client(Client* list, int* size, char* name, int id, int pas, char st
 void ManagerRegister(Manager* list, int* size);
 int ManagerLogin(Manager* list, int* size);
 void ActionsOnClient();
+void printBlockOptions();
 void set_All_Data_Client(Client* list, int size);
 Client* get_All_Data_Client(Client* list, int* size);
 void set_All_Data_Manager(Manager* list, int size);

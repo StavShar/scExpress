@@ -51,7 +51,7 @@ Cart Add_To_Cart(Product* plist, int slist, Cart clist, int* scart, int sn, int 
 }
 
 //printing current cart as "serial number" - "product name" - "amount" - "price(amount * product's price)"
-void View_cart(Product* plist, int slist, Cart clist, int scart)
+void View_cart(Product* plist, int slist, Cart clist, int scart, Client c)
 {
 	int index;
 	clist.tp = 0;//reset total price
@@ -69,7 +69,10 @@ void View_cart(Product* plist, int slist, Cart clist, int scart)
 				clist.tp += (clist.amount[i] * Get_Price(plist[index]));
 			}
 		}
-		printf("Total price: %.2f\n", clist.tp);
+		if (c.clubMember == 'y')
+			printf("Total price: %.2f\n", clist.tp * 0.9);
+		else
+			printf("Total price: %.2f\n", clist.tp);
 	}
 }
 

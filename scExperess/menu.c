@@ -62,10 +62,10 @@ void ManagerEntranceLoop(Manager* managers, int* size, float* profit)
         switch (option)
         {//act accordingly:
         case 1:
-            ManagerRegister();
+            ManagerRegister(managers, size);
             //no "break" means continue to login in case 2
         case 2:
-            index = ManagerLogin();
+            index = ManagerLogin(managers, size);
             if (index != -1)
                 ManagerLoop(profit, managers[index]);
             break;
@@ -103,10 +103,10 @@ void ClientEntranceLoop(Client* clients, int* size)
         switch (option)
         {//act accordingly:
         case 1:
-            ClientRegister();
+            ClientRegister(clients, size);
             //no "break" means continue to login in case 2
         case 2:
-            index = ClientLogin();
+            index = ClientLogin(clients, size);
             if (index != -1)
                 ClientLoop(clients[index]);
             break;
@@ -135,10 +135,12 @@ void ManagerLoop(float* profit, Manager m)
 {
     Product* products = NULL;
     orders* Orders = NULL;
-    int products_size, Orders_size, sn, tr, rcount;
+    Client* clients = NULL;
+    int products_size, Orders_size, sn, tr, rcount, clients_size;
     int ManagerRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
     products = Get_All_Data(products, &products_size);
+    clients = get_All_Data_Client(clients, &clients_size);
     Orders = Get_All_Waiting_Orders(Orders, &Orders_size);
     while (ManagerRun)
     {  //while we still want to run:
@@ -172,7 +174,7 @@ void ManagerLoop(float* profit, Manager m)
             Set_Rating_vars(tr, rcount);
             break;
         case 7:
-            ActionsOnClient();
+            ActionsOnClient(clients, clients_size);
             break;
         case 8:
             printf("Enter serial number: ");
@@ -195,6 +197,7 @@ void ManagerLoop(float* profit, Manager m)
 
     }//end while(run)
     set_All_Data(products, products_size);
+    set_All_Data_Client(clients, clients_size);
     Set_All_Waiting_Orders(Orders, Orders_size);
 }
 
@@ -265,7 +268,7 @@ void ClientLoop(Client c)
             break;
         case 7:
             while (flag) {
-                View_cart(products, products_size, cart, cart_size);
+                View_cart(products, products_size, cart, cart_size, c);
                 printCartMenu();
                 scanf("%d", &option);
                 if (option == 1)
@@ -274,7 +277,7 @@ void ClientLoop(Client c)
                     scanf("%d", &sn);
                     cart = Remove_From_Cart(cart, &cart_size, sn);
                     printf("Your updated cart is:\n");
-                    View_cart(products, products_size, cart, cart_size);
+                    View_cart(products, products_size, cart, cart_size, c);
                     flag = 0;
                 }
                 else if (option == 2)
