@@ -25,7 +25,7 @@ void mainMenu()
             //activate the methods that resposible for it
             break;//end of this iteration
         case 2:
-            ClientEntranceLoop(clients, clients_size);
+            clients = ClientEntranceLoop(clients, &clients_size);
             break;
         case 3:
             GeneralRun = 0; //we want to stop running.
@@ -104,7 +104,7 @@ Client* ClientEntranceLoop(Client* clients, int* size)
         switch (option)
         {//act accordingly:
         case 1:
-            ClientRegister(clients, size);
+            clients = ClientRegister(clients, size);
             //no "break" means continue to login in case 2
         case 2:
             index = ClientLogin(clients, size);

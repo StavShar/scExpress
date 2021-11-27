@@ -6,7 +6,7 @@
 
 
     //client register
-    void ClientRegister(Client* list,int* size)
+Client* ClientRegister(Client* list,int* size)
     {
         
         int i, flag = 1,id,password;
@@ -15,6 +15,7 @@
         printf("                        ---CLIENT REGISTRATION--- \n");
         printf("please enter your User Name: ");
         do {
+            getchar();
             gets(userName);
             for (i = 0; i < strlen(userName); i++)
             {
@@ -66,7 +67,8 @@
         clubMember = 'n';
         status = 'y';
         
-        list=Add_Client(list, size,userName,id,password,status,clubMember);
+        list = Add_Client(list, size, userName, id, password, status, clubMember);
+        return list;
     }
 
 
@@ -132,9 +134,7 @@
         printf("                        ---CLIENT LOG IN--- \n");
         printf("please enter your Id: ");
         scanf("%d", &id);
-        printf("please enter your password: ");
-        scanf("%d", &password);
-        for (i = 0;i < size;i++)
+        for (i = 0;i < *size;i++)
         {
             if (list[i].id == id)
             {
@@ -150,13 +150,16 @@
         }
 
         printf("please enter your User Name: ");
-            if (strcpy(list[clientIndex].name, userName)!=0)
+        getchar();
+        gets(userName);
+            if (strcmp(list[clientIndex].name, userName)!=0)
             {
                 printf("User name does not exists");
                 return -1;
             }
         
             printf("please enter your password: ");
+            scanf("%d", &password);
             if (list[clientIndex].password != password)
             {
                 printf("this password does not match your user details");
