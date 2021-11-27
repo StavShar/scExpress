@@ -334,18 +334,15 @@
     }
 
     //manager register
-    void ManagerRegister(Manager* list, int* size)
+    Manager* ManagerRegister(Manager* list, int* size)
     {
         int i, flag = 1;
         char userName[50];
         int id, password;
         printf("                        ---MANAGER REGISTRATION--- \n");
         printf("please enter your User Name: ");
-            getchar();
-            gets(userName);
-            
-
-        
+        getchar();
+        gets(userName);
         printf("please enter your Id: ");
         do {
             scanf("%d", &id);
@@ -358,8 +355,6 @@
                 flag = 1;
 
         } while (flag == 0);
-
-
 
         printf("please enter your Password: ");
         flag = 1;
@@ -376,7 +371,7 @@
         } while (flag == 0);
 
         list = Add_Manager(list, size, userName, id, password);
-
+        return list;
     }
 
 
@@ -439,9 +434,7 @@
         printf("                        ---MANAGER LOG IN--- \n");
         printf("please enter your Id: ");
         scanf("%d", &id);
-        printf("please enter your password: ");
-        scanf("%d", &password);
-        for (i = 0;i < size;i++)
+        for (i = 0;i < *size;i++)
         {
             if (list[i].id == id)
             {
@@ -457,16 +450,19 @@
         }
 
         printf("please enter your User Name: ");
-        if (strcpy(list[ManagerIndex].name, userName) != 0)
+        getchar();
+        gets(userName);
+        if (strcmp(list[ManagerIndex].name, userName) != 0)
         {
             printf("User name does not exists");
             return -1;
         }
 
         printf("please enter your password: ");
+        scanf("%d", &password);
         if (list[ManagerIndex].password != password)
         {
-            printf("this password does not match your user details");
+            printf("this password does not match your user details\n");
             return -1;
         }
 

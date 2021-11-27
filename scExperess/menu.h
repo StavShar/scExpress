@@ -4,9 +4,9 @@
 
 void mainMenu();
 void printGeneralOptions();//A function that print the menu to screen.
-void ManagerEntranceLoop(Manager* managers, int* size, float* profit);
+Manager* ManagerEntranceLoop(Manager* managers, int* size, float* profit);
 void printManagerEntranceOptions();//A function that print the menu to screen.
-void ClientEntranceLoop(Client* clients, int* size);
+Client* ClientEntranceLoop(Client* clients, int* size);
 void printClientEntranceOptions();//A function that print the menu to screen.
 void ManagerLoop(float* profit, Manager m);
 void printManagerOptions();//A function that print the menu to screen.

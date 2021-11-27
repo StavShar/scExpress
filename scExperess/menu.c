@@ -21,7 +21,7 @@ void mainMenu()
         switch (option)
         {//act accordingly:
         case 1:
-            ManagerEntranceLoop(managers, &managers_size, &profit);
+            managers = ManagerEntranceLoop(managers, &managers_size, &profit);
             //activate the methods that resposible for it
             break;//end of this iteration
         case 2:
@@ -50,7 +50,7 @@ void printGeneralOptions()
     printf("----------------------------------------------------------------------\n");
 }//end method printManagerOptions()
 
-void ManagerEntranceLoop(Manager* managers, int* size, float* profit)
+Manager* ManagerEntranceLoop(Manager* managers, int* size, float* profit)
 {
     int ManagerEntranceRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
@@ -62,7 +62,7 @@ void ManagerEntranceLoop(Manager* managers, int* size, float* profit)
         switch (option)
         {//act accordingly:
         case 1:
-            ManagerRegister(managers, size);
+            managers = ManagerRegister(managers, size);
             //no "break" means continue to login in case 2
         case 2:
             index = ManagerLogin(managers, size);
@@ -77,6 +77,7 @@ void ManagerEntranceLoop(Manager* managers, int* size, float* profit)
         }//end switch
 
     }//end while(run)
+    return managers;
 }
 
 //A function that print the menu to screen.
@@ -90,7 +91,7 @@ void printManagerEntranceOptions()
     printf("----------------------------------------------------------------------\n");
 }//end method printOptions()
 
-void ClientEntranceLoop(Client* clients, int* size)
+Client* ClientEntranceLoop(Client* clients, int* size)
 {
     int ClientEntranceRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
@@ -118,6 +119,7 @@ void ClientEntranceLoop(Client* clients, int* size)
         }//end switch
 
     }//end while(run)
+    return clients;
 }
 
 //A function that print the menu to screen.
