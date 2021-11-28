@@ -129,7 +129,6 @@ Product New_Product()
 
 	//get category
 	printf("Enter category of product: ");
-	getchar();
 	gets(str);
 	p.category = (char*)malloc((strlen(str) + 1) * sizeof(char));
 	if (p.category == NULL)
@@ -391,12 +390,12 @@ void Update_Quantity(Product* list, int size, int sn)
 		printf("Product not found.\n");
 	else//Product found
 	{
-		printf("The current quantity is: %d\nEnter new quantity: ", &list[index].quantity);
+		printf("The current quantity is: %d\nEnter new quantity: ", list[index].quantity);
 		scanf("%d", &new_quantity);
 		if (new_quantity >= 0)//valid quantity
 		{
 			list[index].quantity = new_quantity;
-			printf("The new quantity is: %d\n", &list[index].quantity);
+			printf("The new quantity is: %d\n", list[index].quantity);
 		}
 		else//invalid quantity
 			printf("Invalid quantity, quantity not changed.\n");
@@ -407,7 +406,7 @@ void Update_Quantity(Product* list, int size, int sn)
 void Print_Product(const Product p)
 {
 	printf("Name: %s\nCategory: %s\nSerial number: %d\nQuantity: %d\n", p.name, p.category, p.sn, p.quantity);
-	printf("Price: %f\n", Get_Price(p));
+	printf("Price: %.2f\n", Get_Price(p));
 }
 
 //apply a discount to product

@@ -28,6 +28,7 @@ Cart Add_To_Cart(Product* plist, int slist, Cart clist, int* scart, int sn, int 
 				{
 					newSN[i] = clist.sn[i];
 					newAmount[i] = clist.amount[i];
+
 				}
 				//add new product's details
 				newSN[*scart - 1] = sn;
@@ -54,7 +55,7 @@ Cart Add_To_Cart(Product* plist, int slist, Cart clist, int* scart, int sn, int 
 void View_cart(Product* plist, int slist, Cart clist, int scart, Client c)
 {
 	int index;
-	clist.tp = 0;//reset total price
+	float tp = 0;//reset total price
 	if (!scart)//scart = 0
 		printf("Cart is empty.\n");
 	else
@@ -65,8 +66,9 @@ void View_cart(Product* plist, int slist, Cart clist, int scart, Client c)
 			index = Get_Index_Of_Product(plist, slist, clist.sn[i]);
 			if (index != ERROR)
 			{
-				printf("%d - %s - %d - %f\n", clist.sn[i], plist[index].name, clist.amount[i], (clist.amount[i] * Get_Price(plist[index])));//print details
-				clist.tp += (clist.amount[i] * Get_Price(plist[index]));
+				printf("%d - %s - %d - %f\n", clist.sn[i], plist[index].name, clist.amount[i], (clist.amount[i] * (((plist[index].price) - (plist[index].price * (plist[index].discount / 100.0))))/*Get_Price(plist[index])*/));//print details
+				tp += (((plist[index].price) - (plist[index].price * (plist[index].discount / 100.0))));//(clist.amount[i] * Get_Price(plist[index]));
+				clist.tp += tp;
 			}
 		}
 		if (c.clubMember == 'y')

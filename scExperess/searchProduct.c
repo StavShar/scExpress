@@ -2,12 +2,12 @@
 #include <stdio.h>
 #include <string.h>
 
-char Name_search(Product* list,int size ,char* name)
+void Name_search(Product* list,int size ,char* name)
 {
     int i ,x=0;
     if(name == NULL)
     {
-        printf("EROR");
+        printf("EROR\n");
         return 0;
     }
 
@@ -16,34 +16,35 @@ char Name_search(Product* list,int size ,char* name)
         if(strcmp(list[i].name, name) == 0)
         {
             x++;
-            return *list[i].name;
+            printf("\n\n");
+            Print_Product(list[i]);
+            printf("\n\n");
         }
     }
     if(x == 0)
     {
-        printf("the product not exist");
+        printf("the product not exist\n");
     }
     return 0;
 }
 
-int Serial_num_search(Product* list,int size ,int num)
+void Serial_num_search(Product* list,int size ,int num)
 {
     int i;
     if(num == 0)
     {
-        printf("EROR");
-        return 0;
+        printf("EROR\n");
     }
 
     for(i=0; i<size; i++)
     {
         if(list[i].sn == num)
         {
-            return list[i].sn;
+            printf("\n\n");
+            Print_Product(list[i]);
+            printf("\n\n");
         }
     }
-    return 0;
-    
 }
 
 //printing the average rating
@@ -102,28 +103,31 @@ void Low_to_high(Product* list,int size)
 void Select_cat(Product* list,int size)
 {
     int x = 0;
-    char* name ,str[50];
-    printf("Please select the category name:");
+    char* cat,str[50];
+    printf("Please select the category name: ");
+    getchar();
     gets(str);
-    name = (char*)malloc((strlen(str) + 1) * sizeof(char));
-    if(name == NULL)
+    cat = (char*)malloc((strlen(str) + 1) * sizeof(char));
+    if(cat == NULL)
     {
-        printf("eror");
+        printf("eror\n");
         return;
     }
     
     for(int i = 0; i < size; i++)
     {
-        if(strcmp(list[i].category,name))
+        if(strcmp(list[i].category,cat))
         {
+            printf("\n\n");
             Print_Product(list[i]);
+            printf("\n\n");
             x++;
         }
         
     }
     if(x == 0)
     {
-        printf("This category does not exist");
+        printf("This category does not exist\n");
     }
     
 }

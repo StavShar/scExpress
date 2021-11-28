@@ -150,7 +150,7 @@ void ManagerLoop(float* profit, Manager m)
         scanf("%d", &option);//get the user choise
         switch (option) {//act accordingly:
         case 1:
-            ActionsOnProducts(products, &products_size);
+            products = ActionsOnProducts(products, &products_size);
 
             break;//end of this iteration
         case 2:
@@ -266,11 +266,22 @@ void ClientLoop(Client c)
             scanf("%d", &sn);
             printf("Enter quantity: ");
             scanf("%d", &quantity);
-            cart = Add_To_Cart(products, products_size,cart,&cart_size,sn,quantity);
+            cart.sn = NULL;
+            cart.amount = NULL;
+            cart.tp = 0.0;
+            cart = Add_To_Cart(products, products_size, cart, &cart_size, sn, quantity);
             break;
         case 7:
+            flag = 1;
             while (flag) {
-                View_cart(products, products_size, cart, cart_size, c);
+                if (cart_size)
+                    View_cart(products, products_size, cart, cart_size, c);
+                else
+                {
+                    printf("Your cart is empty\n");
+                    flag = 0;
+                    break;
+                }
                 printCartMenu();
                 scanf("%d", &option);
                 if (option == 1)
@@ -318,7 +329,7 @@ void printCartMenu()
 
 }
 
-void ActionsOnProducts(Product* list, int* size)
+Product* ActionsOnProducts(Product* list, int* size)
 {
     int index, flag = 1, option;
     int sn;
@@ -326,9 +337,10 @@ void ActionsOnProducts(Product* list, int* size)
     {  
         printf("Please choose one of the following options:\n Press\n");
         printf("----------------------------------------------------------------------\n");
-        printf("1- Actions on a product\n");
+        printf("1- Add a product\n");
         printf("2- Search product\n");
         printf("3- change price\n");
+        printf("4- back\n");
         scanf("%d", &option);
         switch (option)
         {
@@ -345,11 +357,15 @@ void ActionsOnProducts(Product* list, int* size)
             scanf("%d", &sn);
             Update_Quantity(list, size, sn);
             break;
+        case 4:
+            flag = 0;
+            break;
         default: 
             printf("Wrong option. Please try again!\n");
         }
 
     }
+    return list;
 }
     
 //A function that print the menu to screen.
