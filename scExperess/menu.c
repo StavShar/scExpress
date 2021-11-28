@@ -138,7 +138,7 @@ void ManagerLoop(float* profit, Manager m)
     Product* products = NULL;
     orders* Orders = NULL;
     Client* clients = NULL;
-    int products_size = 0, Orders_size = 0, sn, tr, rcount, clients_size = 0;
+    int products_size = 0, Orders_size = 0, sn, tr = 0, rcount = 0, clients_size = 0;
     int ManagerRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
     products = Get_All_Data(products, &products_size);
@@ -449,7 +449,6 @@ void Set_Rating_vars(int tr, int rcount)
        
     fclose(fw);//close file
 }
-//end method printClientOptions()
 
 
 

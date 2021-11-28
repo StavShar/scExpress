@@ -3,7 +3,7 @@
 int main()
 {
 	/*FILE* fr;
-	fr = fopen("Next_Order_SN.csv.csv", "w");
+	fr = fopen("Rating_Vars.csv", "w");
 	fclose(fr);*/
 	mainMenu();
 	return 0;

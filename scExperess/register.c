@@ -181,13 +181,14 @@ Client* ClientRegister(Client* list,int* size)
      //actions on a client
     void ActionsOnClient(Client* c, int clients_size)
     {
-        int flag = 1;
+        int flag = 0;
         char userName[50];
-        int id, password, index;
+        int id, password, index=-1;
         printf("Please enter client's details: ");
         printf("Name: ");
         do {
             printf("User Name: ");
+            getchar();
             gets(userName);
             printf("Id: ");
             scanf("%d", &id);
@@ -198,9 +199,9 @@ Client* ClientRegister(Client* list,int* size)
             if (strcmp(userName, c[index].name) == 0 && id== c[index].id)
             {
                 flag = 1;
-                continue;
             }
-            flag = 0;
+            //flag = 0;
+            if(flag==0)
             printf("User Name or Id are Incorrect , please try again: ");
 
         } while (flag == 0);
