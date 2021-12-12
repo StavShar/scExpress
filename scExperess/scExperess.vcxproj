@@ -23,7 +23,6 @@
     <ClCompile Include="Main.c" />
     <ClCompile Include="menu.c" />
     <ClCompile Include="Orders.c" />
-    <ClCompile Include="Orders_user.c" />
     <ClCompile Include="Product.c" />
     <ClCompile Include="searchProduct.c" />
     <ClCompile Include="register.c" />
@@ -32,7 +31,6 @@
     <ClInclude Include="Cart.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="Orders.h" />
-    <ClInclude Include="Orders_user.h" />
     <ClInclude Include="Product.h" />
     <ClInclude Include="register.h" />
     <ClInclude Include="searchProduct.h" />

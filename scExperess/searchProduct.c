@@ -1,50 +1,50 @@
-#include "searchProduct.h"
+#include "SearchProduct.h"
 #include <stdio.h>
 #include <string.h>
 
-void Name_search(Product* list,int size ,char* name)
+int Name_search(Product* list, int size, char* name)
 {
-    int i ,x=0;
-    if(name == NULL)
+    int i, x = 0;
+    if (name == NULL)
     {
         printf("EROR\n");
         return 0;
     }
 
-    for(i=0; i<size; i++)
+    for (i = 0; i < size; i++)
     {
-        if(strcmp(list[i].name, name) == 0)
+        if (strcmp(list[i].name, name) == 0)
         {
             x++;
-            printf("\n\n");
+            printf("\n");
             Print_Product(list[i]);
-            printf("\n\n");
+            printf("\n");
         }
     }
-    if(x == 0)
-    {
-        printf("the product not exist\n");
-    }
-    return 0;
+    if (x == 0)
+        return 0;
+    return 1;
 }
 
-void Serial_num_search(Product* list,int size ,int num)
+int Serial_num_search(Product* list, int size, int num)
 {
     int i;
-    if(num == 0)
+    if (num == 0)
     {
         printf("EROR\n");
     }
 
-    for(i=0; i<size; i++)
+    for (i = 0; i < size; i++)
     {
-        if(list[i].sn == num)
+        if (list[i].sn == num)
         {
-            printf("\n\n");
+            printf("\n");
             Print_Product(list[i]);
-            printf("\n\n");
+            printf("\n");
+            return 1;
         }
     }
+    return 0;
 }
 
 //printing the average rating
@@ -54,81 +54,73 @@ void Print_Rating(int total_rate, int rating_count)
     printf("The average rating of our site is: %.1f\n", temp);
 }
 
-void Website_ranking(int* total ,int* count)
+void Website_ranking(int* total, int* count)
 {
     int number;
     printf("Please enter a number from one to five");
-    scanf("%d" ,&number);
-    
-    if(number > 0 && number <= 5)
+    scanf("%d", &number);
+
+    if (number > 0 && number <= 5)
     {
-        (*total)+= number;
+        (*total) += number;
         (*count)++;
     }
     else
     {
         printf("wrong number\n");
     }
-    
+
 }
 
-void Low_to_high(Product* list,int size)
+void Low_to_high(Product* list, int size)
 {
-    int i ,temp = 0 ,j;
-    
-    if(size == 0)
+    int count;
+    int* lth = (int*)malloc(size * sizeof(int));//lth means low to high
+
+    for (int i = 0; i < size; i++)
+        lth[i] = i;
+
+    if (!size)
+        printf("Error! currently there are no products in the store\n");
+
+    for (int i = 0; i < size; i++)
     {
-        printf("eror");
-        return;
-    }
-    
-    
-    for(i = 0; i < size - 1; i++)
-    {
-        for(j = 0; i < size - 1; j++)
+        count = 0;
+        for (int j = 0; j < size; j++)
         {
-            if(list[j].price > list[j + 1].price)
-            {
-                temp = list[j].price;
-                list[j].price = list[j + 1].price;
-                list[j + 1].price = temp;
-            }
+            if (list[i].price > list[j].price)
+                count++;
+
         }
+        lth[count] = i;
     }
-    for(i = 0; i < size ; i++)
-    {
-        Print_Product(list[i]);
-    }
+    for (int i = 0; i < size; i++)
+        Print_Product(list[lth[i]]);
 }
-void Select_cat(Product* list,int size)
+
+void Select_cat(Product* list, int size)
 {
     int x = 0;
-    char* cat,str[50];
-    printf("Please select the category name: ");
+    char* cat, str[50];
+    printf("Please select a category: ");
     getchar();
     gets(str);
-    cat = (char*)malloc((strlen(str) + 1) * sizeof(char));
-    if(cat == NULL)
+
+    for (int i = 0; i < size; i++)
     {
-        printf("eror\n");
-        return;
-    }
-    
-    for(int i = 0; i < size; i++)
-    {
-        if(strcmp(list[i].category,cat))
+        if (!strcmp(list[i].category, str))
         {
-            printf("\n\n");
+            printf("\n");
             Print_Product(list[i]);
-            printf("\n\n");
+            printf("\n");
             x++;
         }
-        
+
     }
-    if(x == 0)
+    if (x == 0)
     {
-        printf("This category does not exist\n");
+        printf("Category not exist\n");
     }
-    
+
 }
 

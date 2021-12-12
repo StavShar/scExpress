@@ -155,7 +155,6 @@ void ManagerLoop(float* profit, Manager m)
             break;//end of this iteration
         case 2:
             Searches(products, products_size);
-
             break;
         case 3:
             printf("Enter serial number: ");
@@ -163,12 +162,12 @@ void ManagerLoop(float* profit, Manager m)
             Update_Price(products, products_size, sn);
             break;
         case 4:
-            ViewOrder();
+            ViewAllOrders();
             break;
         case 5:
             printf("Enter serial number: ");
             scanf("%d", &sn);
-            (*profit) += ChangeStatus(Orders, &Orders_size, sn);
+            (*profit) += ChangeStatus(Orders, &Orders_size, products, products_size, sn);
             break;
         case 6:
             Get_Rating_vars(&tr, &rcount);
@@ -244,7 +243,7 @@ void ClientLoop(Client c)
         switch (option)
         {//act accordingly:
         case 1:
-            ViewOrder();
+            ViewPersonalOrders(c.id);
             //activate the functions that resposible for it
             break;//end of this iteration
         case 2:
@@ -297,8 +296,12 @@ void ClientLoop(Client c)
                 else if (option == 2)
                 {
                     pf = Checkout(products, products_size, cart, cart_size);
-                    Orders = Add_Order(Orders, &Orders_size, MakeOrder(pf, cart_size, Get_New_Order_SN(), c.name, c.id, 'w'));
-                    //pf=NULL;cart=null;cart_size=0;
+                    Orders = Add_Order(Orders, &Orders_size, MakeOrder(pf, cart_size, Get_New_Order_SN(), c.name, c.id, 'w', cart.tp));
+                    pf = NULL;
+                    cart.sn = NULL;
+                    cart.amount = NULL;
+                    cart.tp = 0.0;
+                    cart_size = 0;
                     flag = 0;
                 }
                 else if (option == 3)
@@ -400,14 +403,22 @@ void Searches(Product* products, int size)
             printf("Enter name of product: ");
             getchar();
             gets(name);
-            Name_search(products, size, name);
+            if ((Name_search(products, size, name)) == 0)
+            {
+                printf("this product does not exist.");
+                break;
+            }
             flag = 0;
         }
         else if (option == 2)
         {
             printf("Enter serial number of product: ");
             scanf("%d", &sn);
-            Serial_num_search(products, size, sn);
+            if (Serial_num_search(products, size, sn) == 0)
+            {
+                printf("this serial number does not exist.");
+                break;
+            }
             flag = 0;
         }
         else

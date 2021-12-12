@@ -1,4 +1,5 @@
 #include "Product.h"
+#include "Orders.h"
 
 //creating empty product (used in some cases as an error object)
 Product Empty_Product()
@@ -165,7 +166,7 @@ Product New_Product()
 }
 
 //create and return product object
-Product Create_Product(char* name,char* category, int sn, int quantity, float price, int Discount)
+Product Create_Product(char* name, char* category, int sn, int quantity, float price, int Discount)
 {
 	Product p;
 	p.name = (char*)malloc((strlen(name) + 1) * sizeof(char));
@@ -345,19 +346,19 @@ Product* Remove_Product(Product* list, int* size, int sn)
 	}
 }
 
-//return TRUE if product is exist, FALASE if not
+//return TRUE if product is exist, FALSE if not
 int Get_Index_Of_Product(Product* list, int size, int sn)
 {
 	for (int i = 0; i < size; i++)
 		if (list[i].sn == sn)//if product found
 			return i;
-	return ERROR;
+	return -1;
 }
 
 //return calculated price after discount
 float Get_Price(Product p)
 {
-	return ((p.price) - (p.price * (p.discount / 100.0)));
+	return (p.price - (p.price * (p.discount / 100.0)));
 }
 
 //updating price of product if he is exist
@@ -365,13 +366,13 @@ void Update_Price(Product* list, int size, int sn)
 {
 	float new_price;
 	int index = Get_Index_Of_Product(list, size, sn);
-	if (index == ERROR)//Product not found
+	if (index == -1)//Product not found
 		printf("Product not found.\n");
 	else//Product found
 	{
-		printf("The current price is: %f\nEnter updated price: ", &list[index].price);
+		printf("The current price is: %f\nEnter updated price: ", list[index].price);
 		scanf("%f", &new_price);
-		if (new_price > 0)//valid price
+		if (new_price >= 0)//valid price
 		{
 			list[index].price = new_price;
 			printf("The new price is: %f\n", Get_Price(list[index]));
@@ -419,13 +420,18 @@ void Discount_Product(Product* list, int size, int sn)
 	else//Product found
 	{
 		printf("Enter the precentage of discount you want to apply on this product:\n");
-		printf("For example: if you want to apply 40% of discount, enter 40\n");
-		printf("If you want to disable the discount enter 0 which means 0% discount\n");
+		printf("For example: if you want to apply 40 % of discount, enter 40 \n");
+		printf("If you want to disable the discount enter 0 which means 0 % discount\n");
 		scanf("%d", &discount_precentage);
-		if ((discount_precentage >= 0) && (discount_precentage < 100))
+		if ((discount_precentage > 0) && (discount_precentage < 100))
 		{
 			list[index].discount = discount_precentage;
 			printf("The updated price is: %f\n", Get_Price(list[index]));
+		}
+		else if (discount_precentage == 0)
+		{
+			list[index].price = (list[index].price) / (1 - ((list[index].price) / 100.0));
+			list[index].discount = 0;
 		}
 		else
 			printf("Invalid discount precentage, discount not changed.\n");
@@ -436,7 +442,10 @@ void Discount_Product(Product* list, int size, int sn)
 void Print_All_Products(Product* list, int size)
 {
 	for (int i = 0; i < size; i++)
+	{
 		Print_Product(list[i]);
+		printf("\n");
+	}
 }
 
 //print all the products are out of stock
