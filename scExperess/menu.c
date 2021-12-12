@@ -228,6 +228,9 @@ void ClientLoop(Client c)
     ProductFile* pf = NULL;
     orders* Orders = NULL;
     Cart cart;
+    cart.sn = NULL;
+    cart.amount = NULL;
+    cart.tp = 0.0;
     int products_size = 0, Orders_size = 0, cart_size = 0, sn, quantity, tr, rcount, flag = 1;
     int ClientRun = 1, option;
     char name[50];
@@ -266,9 +269,7 @@ void ClientLoop(Client c)
             scanf("%d", &sn);
             printf("Enter quantity: ");
             scanf("%d", &quantity);
-            cart.sn = NULL;
-            cart.amount = NULL;
-            cart.tp = 0.0;
+
             cart = Add_To_Cart(products, products_size, cart, &cart_size, sn, quantity);
             break;
         case 7:
@@ -297,12 +298,13 @@ void ClientLoop(Client c)
                 {
                     pf = Checkout(products, products_size, cart, cart_size);
                     Orders = Add_Order(Orders, &Orders_size, MakeOrder(pf, cart_size, Get_New_Order_SN(), c.name, c.id, 'w'));
+                    //pf=NULL;cart=null;cart_size=0;
                     flag = 0;
                 }
                 else if (option == 3)
                     flag = 0;
                 else
-                    printf("Wrong number, please try again\n");                
+                    printf("Wrong number, please try again\n");
             }
             break;
         case 8:
@@ -334,7 +336,7 @@ Product* ActionsOnProducts(Product* list, int* size)
     int index, flag = 1, option;
     int sn;
     while (flag)
-    {  
+    {
         printf("Please choose one of the following options:\n Press\n");
         printf("----------------------------------------------------------------------\n");
         printf("1- Add a product\n");
@@ -360,14 +362,14 @@ Product* ActionsOnProducts(Product* list, int* size)
         case 4:
             flag = 0;
             break;
-        default: 
+        default:
             printf("Wrong option. Please try again!\n");
         }
 
     }
     return list;
 }
-    
+
 //A function that print the menu to screen.
 void printClientOptions()
 {
@@ -446,7 +448,7 @@ void Set_Rating_vars(int tr, int rcount)
         exit(1);
     }
     fprintf(fw, "%d,%d\n", tr, rcount);
-       
+
     fclose(fw);//close file
 }
 

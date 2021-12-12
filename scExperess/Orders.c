@@ -15,7 +15,7 @@
 //pSer is initialized at digit 10000, to make a following serial number
 //username is the name of the customer
 //id is the id number of the customer
-orders MakeOrder(ProductFile* listPro, int* sizep, int orderSN, char* username, int id, char status)
+orders MakeOrder(ProductFile* listPro, int sizep, int orderSN, char* username, int id, char status)
 {
 	orders order;
 	order.username = (char*)malloc((strlen(username) + 1) * sizeof(char));
@@ -26,6 +26,7 @@ orders MakeOrder(ProductFile* listPro, int* sizep, int orderSN, char* username, 
 	}
 	strcpy(order.username, username);
 	order.id = id;
+	order.size = sizep;
 	order.items = listPro;
 	order.serial = orderSN;
 	order.status = status;
@@ -64,7 +65,7 @@ orders* Get_All_Waiting_Orders(orders* list, int* size)
 		Osn = atoi(sp);
 		sp = strtok(NULL, ",");
 		status = sp[0];
-		sp = strtok(line, ",");
+		sp = strtok(NULL, ",");
 		size1 = atoi(sp);
 		plist = (ProductFile*)malloc(size1 * sizeof(ProductFile));
 		if (plist == NULL)
@@ -80,6 +81,7 @@ orders* Get_All_Waiting_Orders(orders* list, int* size)
 				printf("Allocate memory failed.\n");
 				exit(1);
 			}
+			sp = strtok(NULL, ",");
 			strcpy(plist[i].name, sp);
 			sp = strtok(NULL, ",");
 			sn2 = atoi(sp);
@@ -91,7 +93,7 @@ orders* Get_All_Waiting_Orders(orders* list, int* size)
 			plist[i].price = price;
 			plist[i].sn = sn2;
 		}
-		list = Add_Order(list, size, MakeOrder(plist, &size1, Osn, username, id, status));
+		list = Add_Order(list, size, MakeOrder(plist, size1, Osn, username, id, status));
 	}
 	fclose(fr);//close file
 	return list;
@@ -109,7 +111,7 @@ orders* Set_All_Waiting_Orders(orders* list, int size)
 	}
 	for (int i = 0; i < size; i++)
 	{
-		fprintf(fw, "%s,%s,%d,%d,%f,%d,", list[i].username, list[i].id, list[i].serial, list[i].status, list[i].size);
+		fprintf(fw, "%s,%d,%d,%c,%d,", list[i].username, list[i].id, list[i].serial, list[i].status, list[i].size);
 		for (int j = 0; j < list[i].size; i++)//write items list
 			fprintf(fw, "%s,%d,%d,%f\n", list[i].items->name, list[i].items->sn, list[i].items->amount, list[i].items->price);
 	}
@@ -238,30 +240,37 @@ void PrintfProfit(int* pTotalPrice)
 
 float ChangeStatus(orders* Allorders, int* size, int sn)
 {
-	int i;
+	int i, flag = 1;
 	float tp = 0;
 	char YN;//Yes and No to approve or cancel
-	puts("Please enter the customer's id: ");
+	//puts("Please enter the customer's id: ");
 	for (i = 0; i < *size; i++)
 	{
-		if (Allorders[i].serial == sn);
+		if (Allorders[i].serial == sn)
 		{
-
-			puts("You wish to confirm or cancel the order?(Y\N)\n");
-			scanf("%c", &YN);
-			if (YN == "Y")
-			{
-				Allorders[i].status = "Y";
-
-			}
-			else
-			{
-				Allorders[i].status = "N";
-			}
-			tp = orderHistory(Allorders[i].id, Allorders, Allorders[i].items, sn);
-			Remove_Order(Allorders, size, sn);
+			do {
+				printf("You wish to confirm or cancel the order?(Y/N)\n");
+				YN = getchar();
+				if (YN == 'Y' || YN == 'y')
+				{
+					Allorders[i].status = 'Y';
+					flag = 0;
+				}
+				else if (YN == 'N' || YN == 'n')
+				{
+					Allorders[i].status = 'N';
+					flag = 0;
+				}
+				else
+					printf("wrong input, try again\n");
+			}while (flag);
+			tp = orderHistory(Allorders[i].id, Allorders, Allorders[i].size, sn);
+			Allorders = Remove_Order(Allorders, size, sn);
+			i = *size;//exit the loop
 		}
 	}
+	if (flag)
+		printf("Order can't be found\n");
 	return tp;
 }
 
@@ -284,7 +293,7 @@ float orderHistory(int id, ProductFile* order, int items, int sn)
 	if (!HisOr)
 	{
 		puts("Open file have failed");
-		exit(0);
+		exit(1);
 	}
 	ManagerHistory = fopen("HistoryOfAllOrders.txt", "a");
 
@@ -320,11 +329,18 @@ void ViewOrder()
 		puts("Can't open file");
 		exit(1);
 	}
-	do
+	temp = fgetc(fp);
+	if (temp == EOF)
+		printf("There is no history.\n");
+	else
 	{
-		temp = fgetc(fp);
 		printf("%c", temp);
-	} while (temp != EOF);
+		while (temp != EOF)
+		{
+			temp = fgetc(fp);
+			printf("%c", temp);
+		}
+	}
 	fclose(fp);
 }
 //void PendingOrders(orders* List)

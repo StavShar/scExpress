@@ -37,6 +37,7 @@ Cart Add_To_Cart(Product* plist, int slist, Cart clist, int* scart, int sn, int 
 				free(clist.amount);
 				clist.sn = newSN;
 				clist.amount = newAmount;
+				clist.tp += plist[i].price * quantity;
 				return clist;
 			}
 			else
@@ -68,7 +69,6 @@ void View_cart(Product* plist, int slist, Cart clist, int scart, Client c)
 			{
 				printf("%d - %s - %d - %f\n", clist.sn[i], plist[index].name, clist.amount[i], (clist.amount[i] * (((plist[index].price) - (plist[index].price * (plist[index].discount / 100.0))))/*Get_Price(plist[index])*/));//print details
 				tp += (((plist[index].price) - (plist[index].price * (plist[index].discount / 100.0))));//(clist.amount[i] * Get_Price(plist[index]));
-				clist.tp += tp;
 			}
 		}
 		if (c.clubMember == 'y')
