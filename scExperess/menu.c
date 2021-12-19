@@ -295,8 +295,13 @@ void ClientLoop(Client c)
                 }
                 else if (option == 2)
                 {
+                    float deliveryCost;
+                    deliveryCost = ShippingDetails();
+                    cart.tp += deliveryCost;
                     pf = Checkout(products, products_size, cart, cart_size);
                     Orders = Add_Order(Orders, &Orders_size, MakeOrder(pf, cart_size, Get_New_Order_SN(), c.name, c.id, 'w', cart.tp));
+                    printf("Total price is: %.2f", cart.tp);
+                    printf("Your order is waiting for manager approve\n");
                     pf = NULL;
                     cart.sn = NULL;
                     cart.amount = NULL;

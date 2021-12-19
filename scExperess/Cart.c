@@ -74,6 +74,23 @@ void View_cart(Product* plist, int slist, Cart clist, int scart, Client c)
 	}
 }
 
+float ShippingDetails()
+{
+	int state;
+	while (TRUE) {
+		printf("Choose your state:\n1-North\n2-Central\n3-South\n");
+		scanf("%d", &state);
+		if (state == 1)
+			return NORTH;
+		else if (state == 2)
+			return CENTRAL;
+		else if (state == 3)
+			return SOUTH;
+		else
+			printf("Wrong number, please try again\n");
+	}
+}
+
 //remove product from cart by serial number
 Cart Remove_From_Cart(Cart clist, int* scart, int sn)
 {
