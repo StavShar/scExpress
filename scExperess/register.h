@@ -34,4 +34,4 @@ void set_All_Data_Client(Client* list, int size);
 Client* get_All_Data_Client(Client* list, int* size);
 void set_All_Data_Manager(Manager* list, int size);
 Manager* get_All_Data_Manager(Manager* list, int* size);
-void ClubMember(Client* list, int* size, int clientIndex);
+char ClubMember();

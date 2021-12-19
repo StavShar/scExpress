@@ -45,11 +45,11 @@ Client* ClientRegister(Client* list, int* size)
     do {
         scanf("%d", &id);
         flag = 1;
-        /*if (id < 100000000 || id > 999999999)
+        if (id < 100000000 || id > 999999999)
         {
-            printf("Id must be 9 digits. please tery again ");
+            printf("Id must be 9 digits. please try again ");
             flag = 0;
-        }*/
+        }
 
     } while (flag == 0);
 
@@ -60,11 +60,11 @@ Client* ClientRegister(Client* list, int* size)
     do {
         scanf("%d", &password);
         flag = 1;
-        /* if (password < 10000 || password > 99999)
+         if (password < 10000 || password > 99999)
          {
-             printf("Password must be 5 digits. please tery again ");
+             printf("Password must be 5 digits. please try again ");
              flag = 0;
-         }*/
+         }
     } while (flag == 0);
     clubMember = 'n';
     status = 'y';
@@ -75,7 +75,6 @@ Client* ClientRegister(Client* list, int* size)
     fclose(fp);
     return list;
 }
-
 
 //set all products data in "Users.csv" file
 void set_All_Data_Client(Client* list, int size)
@@ -176,12 +175,11 @@ int ClientLogin(Client* list, int* size)
         printf("This user is blocked. Please contact management for more details");
         return -1;
     }
-    ClubMember(list, size, clientIndex);
+    if (list[clientIndex].clubMember == 'n')
+        list[clientIndex].clubMember = ClubMember();
 
     return clientIndex;
 }
-
-//switchcase
 
  //actions on a client
 void ActionsOnClient(Client* c, int clients_size)
@@ -247,7 +245,6 @@ void printBlockOptions()
     printf("3- Exit\n");
     printf("----------------------------------------------------------------------\n");
 }//end method printManagerOptions()
-
 
 //adding manager into the manager's list
 Manager* Add_Manager(Manager* list, int* size, char* name, int id, int pas)
@@ -359,14 +356,14 @@ Manager* ManagerRegister(Manager* list, int* size)
     do {
         flag = 1;
         scanf("%d", &id);
-        /*
+        
         if (id < 100000000 || id > 999999999)
         {
             printf("Id must be 9 digits. please try again\n");
             flag = 0;
         }
         else
-            flag = 1;*/
+            flag = 1;
 
     } while (flag == 0);
 
@@ -375,20 +372,19 @@ Manager* ManagerRegister(Manager* list, int* size)
     do {
         scanf("%d", &password);
         flag = 1;
-        /*if (password < 10000 || password > 99999)
+        if (password < 10000 || password > 99999)
         {
             printf("Password must be 5 digits. please try again ");
             flag = 0;
 
         }
         else
-            flag = 1;*/
+            flag = 1;
     } while (flag == 0);
 
     list = Add_Manager(list, size, userName, id, password);
     return list;
 }
-
 
 //set all products data in "Users.csv" file
 void set_All_Data_Manager(Manager* list, int size)
@@ -440,7 +436,6 @@ Manager* get_All_Data_Manager(Manager* list, int* size)
     return list;
 }
 
-
 //manager login
 int ManagerLogin(Manager* list, int* size)
 {
@@ -484,22 +479,22 @@ int ManagerLogin(Manager* list, int* size)
     return ManagerIndex;
 
 }
-//switchcase
 
-
-//switchcase
-
-void ClubMember(Client* list, int* size, int clientIndex) //לתקן צריך לחפש את הלקוח הספציפי בקובץ
+char ClubMember()
 {
-    if (&list[clientIndex].clubMember == 'n')
+    int option;
+    while (1)
     {
-        char option;
         printf("do you want to be a club member? choose one of the following options: \n ");
-        printf("0 - yes \n ");
-        printf("1 - no \n ");
-        scanf("%c", &option);
-        if (option == 0)
-            (list[clientIndex].clubMember = 'y');
+        printf("1 - yes \n ");
+        printf("2 - no \n ");
+        scanf("%d", &option);
+        if (option == 1)
+            return 'y';
+        else if (option == 2)
+            return 'n';
+        else
+            printf("Wrong number, please try again\n");
     }
 }
 

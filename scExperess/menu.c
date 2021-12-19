@@ -296,8 +296,11 @@ void ClientLoop(Client c)
                 else if (option == 2)
                 {
                     float deliveryCost;
+                  
+                    if (c.clubMember == 'y')
+                        cart.tp *= 0.9;//10% discount
                     deliveryCost = ShippingDetails();
-                    cart.tp += deliveryCost;
+                    cart.tp += deliveryCost;//delivery not include in the club members discount (external company)
                     pf = Checkout(products, products_size, cart, cart_size);
                     Orders = Add_Order(Orders, &Orders_size, MakeOrder(pf, cart_size, Get_New_Order_SN(), c.name, c.id, 'w', cart.tp));
                     printf("Total price is: %.2f", cart.tp);
