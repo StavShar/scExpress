@@ -21,7 +21,7 @@ void mainMenu()
         switch (option)
         {//act accordingly:
         case 1:
-            managers = ManagerEntranceLoop(managers, &managers_size, &profit);
+            managers = ManagerEntranceLoop(managers, &managers_size, &profit, clients, clients_size);
             //activate the methods that resposible for it
             break;//end of this iteration
         case 2:
@@ -50,7 +50,7 @@ void printGeneralOptions()
     printf("----------------------------------------------------------------------\n");
 }//end method printManagerOptions()
 
-Manager* ManagerEntranceLoop(Manager* managers, int* size, float* profit)
+Manager* ManagerEntranceLoop(Manager* managers, int* size, float* profit, Client* clients, int clients_size)
 {
     int ManagerEntranceRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
@@ -67,7 +67,7 @@ Manager* ManagerEntranceLoop(Manager* managers, int* size, float* profit)
         case 2:
             index = ManagerLogin(managers, size);
             if (index != -1)
-                ManagerLoop(profit, managers[index]);
+                ManagerLoop(profit, managers[index], clients, clients_size);
             break;
         case 3:
             ManagerEntranceRun = 0; //we want to stop running.
@@ -133,16 +133,14 @@ void printClientEntranceOptions()
     printf("----------------------------------------------------------------------\n");
 }//end method printOptions()
 
-void ManagerLoop(float* profit, Manager m)
+void ManagerLoop(float* profit, Manager m, Client* clients, int clients_size)
 {
     Product* products = NULL;
     orders* Orders = NULL;
-    Client* clients = NULL;
-    int products_size = 0, Orders_size = 0, sn, tr = 0, rcount = 0, clients_size = 0;
+    int products_size = 0, Orders_size = 0, sn, tr = 0, rcount = 0;
     int ManagerRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
     products = Get_All_Data(products, &products_size);
-    clients = get_All_Data_Client(clients, &clients_size);
     Orders = Get_All_Waiting_Orders(Orders, &Orders_size);
     while (ManagerRun)
     {  //while we still want to run:
@@ -198,7 +196,6 @@ void ManagerLoop(float* profit, Manager m)
 
     }//end while(run)
     set_All_Data(products, products_size);
-    set_All_Data_Client(clients, clients_size);
     Set_All_Waiting_Orders(Orders, Orders_size);
 }
 

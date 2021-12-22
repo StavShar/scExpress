@@ -47,8 +47,16 @@ Client* ClientRegister(Client* list, int* size)
         flag = 1;
         if (id < 100000000 || id > 999999999)
         {
-            printf("Id must be 9 digits. please try again ");
+            printf("It must be 9 digits. please try again \n");
             flag = 0;
+        }
+        for (int i = 0; i < *size; i++)
+        {
+            if (list[i].id == id)//if id is already exist
+            {
+                printf("ID already exist in the system, please try again.\n");
+                flag = 0;
+            }
         }
 
     } while (flag == 0);
@@ -62,7 +70,7 @@ Client* ClientRegister(Client* list, int* size)
         flag = 1;
          if (password < 10000 || password > 99999)
          {
-             printf("Password must be 5 digits. please try again ");
+             printf("Password must be 5 digits. please try again \n");
              flag = 0;
          }
     } while (flag == 0);
@@ -149,7 +157,7 @@ int ClientLogin(Client* list, int* size)
     }
     if (flag == 0)
     {
-        printf("This user Id does not registered in the system, if tou are a new user, go to registration");
+        printf("This user Id does not registered in the system, if you are a new user, go to registration\n");
         return -1;
     }
 
@@ -158,7 +166,7 @@ int ClientLogin(Client* list, int* size)
     gets(userName);
     if (strcmp(list[clientIndex].name, userName) != 0)
     {
-        printf("User name does not exists");
+        printf("User name does not exists\n");
         return -1;
     }
 
@@ -166,13 +174,13 @@ int ClientLogin(Client* list, int* size)
     scanf("%d", &password);
     if (list[clientIndex].password != password)
     {
-        printf("this password does not match your user details");
+        printf("this password does not match your user details\n");
         return -1;
     }
 
     if (list[clientIndex].status == 'n')
     {
-        printf("This user is blocked. Please contact management for more details");
+        printf("This user is blocked. Please contact management for more details\n");
         return -1;
     }
     if (list[clientIndex].clubMember == 'n')
@@ -196,12 +204,12 @@ void ActionsOnClient(Client* c, int clients_size)
         scanf("%d", &id);
         for (int i = 0; i < clients_size; i++)
             if (c[i].id == id)
+            {
                 index = i;
-
-        if (strcmp(userName, c[index].name) == 0 && id == c[index].id)
-        {
-            flag = 1;
-        }
+                if (!strcmp(userName, c[index].name))                
+                    flag = 1;
+                i = clients_size;
+            }
         //flag = 0;
         if (flag == 0)
             printf("User Name or Id are Incorrect , please try again: ");
@@ -217,12 +225,12 @@ void ActionsOnClient(Client* c, int clients_size)
         {//act accordingly:
         case 1:
             c[index].status = 'n';
-            printf("This user is now blocked.");
+            printf("This user is now blocked.\n");
             run = 0;
             break;//end of this iteration
         case 2:
             c[index].status = 'y';
-            printf("This user is now unblocked.");
+            printf("This user is now unblocked.\n");
             run = 0;
             break;
         case 3:
@@ -362,9 +370,14 @@ Manager* ManagerRegister(Manager* list, int* size)
             printf("Id must be 9 digits. please try again\n");
             flag = 0;
         }
-        else
-            flag = 1;
-
+        for (int i = 0; i < *size; i++)
+        {
+            if (list[i].id == id)//if id is already exist
+            {
+                printf("ID already exist in the system, please try again.\n");
+                flag = 0;
+            }
+        }
     } while (flag == 0);
 
     printf("please enter your Password: ");
@@ -374,7 +387,7 @@ Manager* ManagerRegister(Manager* list, int* size)
         flag = 1;
         if (password < 10000 || password > 99999)
         {
-            printf("Password must be 5 digits. please try again ");
+            printf("Password must be 5 digits. please try again \n");
             flag = 0;
 
         }
@@ -455,7 +468,7 @@ int ManagerLogin(Manager* list, int* size)
     }
     if (flag == 0)
     {
-        printf("This user Id does not registered in the system, if tou are a new user, go to registration");
+        printf("This user Id does not registered in the system, if tou are a new user, go to registration\n");
         return -1;
     }
 
@@ -464,7 +477,7 @@ int ManagerLogin(Manager* list, int* size)
     gets(userName);
     if (strcmp(list[ManagerIndex].name, userName) != 0)
     {
-        printf("User name does not exists");
+        printf("User name does not exists\n");
         return -1;
     }
 
