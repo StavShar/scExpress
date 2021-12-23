@@ -450,17 +450,28 @@ void Discount_Product(Product* list, int size, int sn)
 //print all products
 void Print_All_Products(Product* list, int size)
 {
-	for (int i = 0; i < size; i++)
+	if (size)
 	{
-		Print_Product(list[i]);
-		printf("\n");
+		for (int i = 0; i < size; i++)
+		{
+			Print_Product(list[i]);
+			printf("\n");
+		}
 	}
+	else
+		printf("There are no products yet\n");
 }
 
 //print all the products are out of stock
 void Print_Products_Out_Of_Stock(Product* list, int size)
 {
+	int flag = 1;// 0 products out of stock
 	for (int i = 0; i < size; i++)
 		if (!list[i].quantity)//if quantity is 0
+		{
 			Print_Product(list[i]);
+			flag = 0;
+		}
+	if (flag)
+		printf("There are no products out of stock\n");
 }

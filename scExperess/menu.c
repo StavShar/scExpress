@@ -139,7 +139,7 @@ void ManagerLoop(float* profit, Manager m, Client* clients, int clients_size)
     orders* Orders = NULL;
     int products_size = 0, Orders_size = 0, sn, tr = 0, rcount = 0;
     int ManagerRun = 1;//do we want another iteration?
-    int option;//the choosen option for the menu.
+    int option, flag;
     products = Get_All_Data(products, &products_size);
     Orders = Get_All_Waiting_Orders(Orders, &Orders_size);
     while (ManagerRun)
@@ -184,8 +184,21 @@ void ManagerLoop(float* profit, Manager m, Client* clients, int clients_size)
             PrintfProfit(profit);
             break;
         case 10:
-            Print_All_Products(products, products_size);
-            Print_Products_Out_Of_Stock(products, products_size);
+            flag = 1;
+            while (flag) {
+                printf("1-Show all the products are not in stock\n2-Show all the products and their quantity in stock\n");
+                scanf("%d", &option);
+                if (option == 2) {
+                    Print_All_Products(products, products_size);
+                    flag = 0;
+                }
+                else if (option == 1) {
+                    Print_Products_Out_Of_Stock(products, products_size);
+                    flag = 0;
+                }
+                else
+                    printf("Wrong number, please try again\n");
+            }
             break;
         case 11:
             ManagerRun = 0; //we want to stop running.
