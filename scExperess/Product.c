@@ -111,7 +111,7 @@ int Get_New_Product_SN()
 ////////////ACTION ON PRODUCTS////////////
 
 //creating new product
-Product New_Product()
+Product New_Product(Product* products, int products_size)
 {
 	Product p;
 	char str[100];
@@ -127,6 +127,13 @@ Product New_Product()
 		exit(1);
 	}
 	strcpy(p.name, str);
+
+	for (int i = 0; i < products_size; i++)
+		if (!strcmp(products[i].name, p.name))
+		{
+			printf("Product already exist\n");
+			return Empty_Product();
+		}
 
 	//get category
 	printf("Enter category of product: ");
@@ -153,7 +160,7 @@ Product New_Product()
 	scanf("%d", &(p.discount));
 
 	//if product's details are legal
-	if ((p.name != NULL) && (p.quantity >= 0) && (p.price >= 0.0) && (p.discount >= 0) && (p.discount < 100))
+	if ((p.name != NULL) && (p.category != NULL) && (p.quantity >= 0) && (p.price >= 0.0) && (p.discount >= 0) && (p.discount < 100))
 	{
 		p.sn = Get_New_Product_SN();
 		return p;
@@ -257,6 +264,7 @@ Product* Add_Product(Product* list, int* size, Product p)
 			free(list[i].category);
 		}
 		free(list);
+		printf("Product successfully added\n");
 		return newlist;
 	}
 }
@@ -320,7 +328,7 @@ Product* Remove_Product(Product* list, int* size, int sn)
 					printf("Allocate memory failed.\n");
 					exit(1);
 				}
-				strcpy(newlist[i].category, list[i].category);
+				strcpy(newlist[i].name, list[i].name);
 				newlist[i].category = (char*)malloc((strlen(list[i].category) + 1) * sizeof(char));
 				if (newlist[i].category == NULL)
 				{
@@ -342,6 +350,7 @@ Product* Remove_Product(Product* list, int* size, int sn)
 			free(list[i].category);
 		}
 		free(list);
+		printf("Product successfully removed\n");
 		return newlist;
 	}
 }

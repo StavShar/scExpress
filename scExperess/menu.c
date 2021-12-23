@@ -348,14 +348,14 @@ Product* ActionsOnProducts(Product* list, int* size)
         printf("Please choose one of the following options:\n Press\n");
         printf("----------------------------------------------------------------------\n");
         printf("1- Add a product\n");
-        printf("2- Search product\n");
-        printf("3- change price\n");
+        printf("2- Remove product\n");
+        printf("3- Update quantity\n");
         printf("4- back\n");
         scanf("%d", &option);
         switch (option)
         {
         case 1:
-            list = Add_Product(list, size, New_Product());
+            list = Add_Product(list, size, New_Product(list, *size));
             break;
         case 2:
             printf("Enter serial number of product: ");
@@ -365,7 +365,7 @@ Product* ActionsOnProducts(Product* list, int* size)
         case 3:
             printf("Enter serial number of product: ");
             scanf("%d", &sn);
-            Update_Quantity(list, size, sn);
+            Update_Quantity(list, *size, sn);
             break;
         case 4:
             flag = 0;

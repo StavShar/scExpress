@@ -26,7 +26,7 @@ int Get_New_Product_SN();//get the next serial number
 
 ////////////ACTION ON PRODUCTS////////////
 
-Product New_Product();//creating new product
+Product New_Product(Product* products, int products_size);//creating new product
 Product Create_Product(char* name, char* category, int sn, int quantity, float price, int Discount);//create and return product object
 Product* Add_Product(Product* list, int* size, Product p);//add a new product to the list
 Product* Remove_Product(Product* list, int* size, int sn);//remove a product from the list
