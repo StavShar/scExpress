@@ -38,6 +38,7 @@ Cart Add_To_Cart(Product* plist, int slist, Cart clist, int* scart, int sn, int 
 				clist.sn = newSN;
 				clist.amount = newAmount;
 				clist.tp += plist[i].price * quantity;
+				printf("%d of the product: %s, added to your cart\n", quantity, plist[i].name);
 				return clist;
 			}
 			else
