@@ -503,7 +503,10 @@ char ClubMember()
         printf("2 - no \n ");
         scanf("%d", &option);
         if (option == 1)
+        {
+            printf("Congratulation! :)\nYou are now a club member\n");
             return 'y';
+        }
         else if (option == 2)
             return 'n';
         else
