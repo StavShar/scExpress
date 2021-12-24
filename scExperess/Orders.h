@@ -33,3 +33,4 @@ void UpdateStock(Product* plist, int psize, orders o);
 void ViewPersonalOrders(int id);
 float ChangeStatus(orders* Allorders, int* size, Product* plist, int psize, int sn);
 void orderHistory(orders o);
+void printWaitingOrders(orders* list, int size);

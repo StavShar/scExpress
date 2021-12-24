@@ -4,10 +4,12 @@
 int main()
 {
 	mainMenu();
-	/*FILE* fr;
-	fr = fopen("Managers.csv", "w");
-	fclose(fr);
-	fr = fopen("Clients.csv", "w");
-	fclose(fr);*/
 	return 0;
 }
+
+
+
+/*
+when you trying to change status, you cant see the orders so you have to guess the SN
+message when item added to cart
+*/

@@ -264,7 +264,6 @@ Product* Add_Product(Product* list, int* size, Product p)
 			free(list[i].category);
 		}
 		free(list);
-		printf("Product successfully added\n");
 		return newlist;
 	}
 }
@@ -350,7 +349,6 @@ Product* Remove_Product(Product* list, int* size, int sn)
 			free(list[i].category);
 		}
 		free(list);
-		printf("Product successfully removed\n");
 		return newlist;
 	}
 }
@@ -379,12 +377,13 @@ void Update_Price(Product* list, int size, int sn)
 		printf("Product not found.\n");
 	else//Product found
 	{
-		printf("The current price is: %f\nEnter updated price: ", list[index].price);
+		//printf("The current price is: %f\nEnter updated price: ", list[index].price);
+		printf("Enter updated price: ");
 		scanf("%f", &new_price);
 		if (new_price >= 0)//valid price
 		{
 			list[index].price = new_price;
-			printf("The new price is: %f\n", Get_Price(list[index]));
+			printf("The new price of %s is: %.2f\n", list[index].name, Get_Price(list[index]));
 		}
 		else//invalid price
 			printf("Invalid price, price not changed.\n");
@@ -428,9 +427,9 @@ void Discount_Product(Product* list, int size, int sn)
 		printf("Product not found.\n");
 	else//Product found
 	{
-		printf("Enter the precentage of discount you want to apply on this product:\n");
-		printf("For example: if you want to apply 40 % of discount, enter 40 \n");
-		printf("If you want to disable the discount enter 0 which means 0 % discount\n");
+		printf("Enter the percentage of discount you want to apply on this product:\n");
+		printf("For example: if you want to apply 40 %c of discount, enter 40 \n", '%');
+		printf("If you want to disable the discount enter 0 which means 0 %c discount\n", '%');
 		scanf("%d", &discount_precentage);
 		if ((discount_precentage > 0) && (discount_precentage < 100))
 		{
@@ -441,9 +440,10 @@ void Discount_Product(Product* list, int size, int sn)
 		{
 			list[index].price = (list[index].price) / (1 - ((list[index].price) / 100.0));
 			list[index].discount = 0;
+			printf("Discount disabled\n");
 		}
 		else
-			printf("Invalid discount precentage, discount not changed.\n");
+			printf("Invalid discount percentage, discount not changed.\n");
 	}
 }
 

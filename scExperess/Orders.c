@@ -269,6 +269,7 @@ float ChangeStatus(orders* Allorders, int* size, Product* plist, int psize, int 
 					Allorders[i].status = 'Y';
 					tp = Allorders[i].tp;
 					flag = 0;
+					printf("Order approved successfuly\n");
 				}
 				else if (option == 2)
 				{
@@ -276,6 +277,7 @@ float ChangeStatus(orders* Allorders, int* size, Product* plist, int psize, int 
 					UpdateStock(plist, psize, Allorders[i]);
 					tp = 0;
 					flag = 0;
+					printf("Order denied successfuly\n");
 				}
 				else if (option == 3)
 				{
@@ -334,7 +336,7 @@ void orderHistory(orders o)
 		{
 			fprintf(personalHistory, "%d - %s - %d - %.2f\n", o.items->sn, o.items->name, o.items->amount, o.items->price);
 		}
-		fprintf(personalHistory, "Total:  %.2f\n\n", o.tp);
+		fprintf(personalHistory, "Total: %.2f\n\n", o.tp);
 	}
 	{//print into manager history
 		fprintf(ManagerHistory, "ORDER NUMBER:  %d\n", o.serial);
@@ -349,10 +351,28 @@ void orderHistory(orders o)
 		{
 			fprintf(ManagerHistory, "%d - %s - %d - %.2f\n", o.items->sn, o.items->name, o.items->amount, o.items->price);
 		}
-		fprintf(ManagerHistory, "Total:  %.2f\n\n", o.tp);
+		fprintf(ManagerHistory, "Total: %.2f\n\n", o.tp);
 	}
 	fclose(personalHistory);
 	fclose(ManagerHistory);
+}
+
+void printWaitingOrders(orders* list, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		
+		printf("ORDER NUMBER:  %d\n", list[i].serial);
+		printf("Client's name:  %s\n", list[i].username);
+		printf("Client's ID:  %d\n", list[i].id);
+		printf("Order status: Waiting\n");
+		printf("Serial number - Product - Amount - Price\n");
+		for (int j = 0; j < list[i].size; j++)
+		{
+			printf("%d - %s - %d - %.2f\n", list[j].items->sn, list[j].items->name, list[j].items->amount, list[j].items->price);
+		}
+		printf("Total: %.2f\n\n", list[i].tp);
+	}
 }
 
 void ViewAllOrders()

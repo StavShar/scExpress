@@ -163,7 +163,14 @@ void ManagerLoop(float* profit, Manager m, Client* clients, int clients_size)
             ViewAllOrders();
             break;
         case 5:
-            printf("Enter serial number: ");
+            if (!Orders_size)
+            {
+                printf("There are no waiting orders\n");
+                break;
+            }
+            printf("Waiting orders:\n");
+            printWaitingOrders(Orders, Orders_size);
+            printf("Enter order number: ");
             scanf("%d", &sn);
             (*profit) += ChangeStatus(Orders, &Orders_size, products, products_size, sn);
             break;
@@ -224,7 +231,7 @@ void printManagerOptions()
     printf("5- Change order status\n");
     printf("6- Watch average site rating\n");
     printf("7- Actions on client\n");
-    printf("8- Sales\n");
+    printf("8- Discounts\n");
     printf("9- Daily profit\n");
     printf("10- Inventory status\n");
     printf("11- Logout\n");
@@ -266,7 +273,10 @@ void ClientLoop(Client c)
             printf("Enter name of product: ");
             getchar();
             gets(name);
-            Name_search(products, products_size, name);
+            if(!Name_search(products, products_size, name))
+            {
+                printf("Product not found\n");
+            }
             break;
         case 5:
             Get_Rating_vars(&tr, &rcount);
@@ -369,11 +379,13 @@ Product* ActionsOnProducts(Product* list, int* size)
         {
         case 1:
             list = Add_Product(list, size, New_Product(list, *size));
+            printf("Product successfully added\n");
             break;
         case 2:
             printf("Enter serial number of product: ");
             scanf("%d", &sn);
             list = Remove_Product(list, size, sn);
+            printf("Product successfully removed\n");
             break;
         case 3:
             printf("Enter serial number of product: ");
@@ -423,7 +435,7 @@ void Searches(Product* products, int size)
             gets(name);
             if ((Name_search(products, size, name)) == 0)
             {
-                printf("this product does not exist.");
+                printf("This product does not exist.\n");
                 break;
             }
             flag = 0;
@@ -434,7 +446,7 @@ void Searches(Product* products, int size)
             scanf("%d", &sn);
             if (Serial_num_search(products, size, sn) == 0)
             {
-                printf("this serial number does not exist.");
+                printf("This serial number does not exist.\n");
                 break;
             }
             flag = 0;

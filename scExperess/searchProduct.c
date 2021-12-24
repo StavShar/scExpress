@@ -57,17 +57,18 @@ void Print_Rating(int total_rate, int rating_count)
 void Website_ranking(int* total, int* count)
 {
     int number;
-    printf("Please enter a number from one to five");
+    printf("Please enter a number from one to five: ");
     scanf("%d", &number);
 
     if (number > 0 && number <= 5)
     {
         (*total) += number;
         (*count)++;
+        printf("Thank you for your feedback\n");
     }
     else
     {
-        printf("wrong number\n");
+        printf("wrong number, please try again\n");
     }
 
 }
