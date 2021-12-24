@@ -426,7 +426,7 @@ void Searches(Product* products, int size)
     char name[50];
 
     do {
-        printf("1- Search product by name\n2- Search product by serial number\n");
+        printf("1- Search product by name\n2- Search product by serial number\n3- back\n");
         scanf("%d", &option);
         if (option == 1)
         {
@@ -434,10 +434,7 @@ void Searches(Product* products, int size)
             getchar();
             gets(name);
             if ((Name_search(products, size, name)) == 0)
-            {
                 printf("This product does not exist.\n");
-                break;
-            }
             flag = 0;
         }
         else if (option == 2)
@@ -445,12 +442,11 @@ void Searches(Product* products, int size)
             printf("Enter serial number of product: ");
             scanf("%d", &sn);
             if (Serial_num_search(products, size, sn) == 0)
-            {
                 printf("This serial number does not exist.\n");
-                break;
-            }
             flag = 0;
         }
+        else if (option == 3)//back
+            flag = 0;
         else
             printf("Wrong number, please try again.\n");
     } while (flag);

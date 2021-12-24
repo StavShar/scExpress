@@ -9,6 +9,15 @@ Cart Add_To_Cart(Product* plist, int slist, Cart clist, int* scart, int sn, int 
 		{
 			if ((quantity > 0) && (quantity <= plist[i].quantity))//add product
 			{
+				for (int j = 0; j < *scart; j++)//if product already in cart
+				{
+					if (sn == clist.sn[j])
+					{
+						clist.amount[j] += quantity;
+						clist.tp += quantity * plist[i].price;
+						return clist;
+					}
+				}
 				(*scart)++;
 				int* newSN, * newAmount;
 				newSN = (int*)malloc((*scart) * sizeof(int));
@@ -28,7 +37,6 @@ Cart Add_To_Cart(Product* plist, int slist, Cart clist, int* scart, int sn, int 
 				{
 					newSN[i] = clist.sn[i];
 					newAmount[i] = clist.amount[i];
-
 				}
 				//add new product's details
 				newSN[*scart - 1] = sn;
@@ -46,7 +54,6 @@ Cart Add_To_Cart(Product* plist, int slist, Cart clist, int* scart, int sn, int 
 				printf("Error! illegal quantity.\n");
 				return clist;
 			}
-
 		}
 	}
 	printf("Error! product can't be found.\n");
