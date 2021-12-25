@@ -385,7 +385,6 @@ Product* ActionsOnProducts(Product* list, int* size)
             printf("Enter serial number of product: ");
             scanf("%d", &sn);
             list = Remove_Product(list, size, sn);
-            printf("Product successfully removed\n");
             break;
         case 3:
             printf("Enter serial number of product: ");

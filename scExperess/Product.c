@@ -349,6 +349,7 @@ Product* Remove_Product(Product* list, int* size, int sn)
 			free(list[i].category);
 		}
 		free(list);
+		printf("Product successfully removed\n");
 		return newlist;
 	}
 }

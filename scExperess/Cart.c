@@ -80,6 +80,7 @@ void View_cart(Product* plist, int slist, Cart clist, int scart, Client c)
 		else
 			printf("Total price: %.2f\n", clist.tp);
 	}
+	printf("\n");
 }
 
 double ShippingDetails()
@@ -103,6 +104,21 @@ double ShippingDetails()
 Cart Remove_From_Cart(Cart clist, int* scart, int sn, Product* plist, int psize)
 {
 	int* newSN, * newAmount;
+	int flag = 1;
+	for (int i = 0; i < *scart; i++)
+	{
+		if (sn == clist.sn[i])
+		{
+			flag = 0;
+			i = *scart;
+		}
+	}
+	if (flag)
+	{
+		printf("Product not found in the cart\n");
+		return clist;
+	}
+
 	(*scart)--;
 	if (!*scart)
 	{
@@ -157,7 +173,7 @@ Cart Calculate_Delivery(Cart clist)
 	int delivery, delFLAG = 1;
 	while (delFLAG)
 	{
-		printf("1 - North (%lfnis)\n2 - Central (%lfnis)\n3 - South (%lflnis)\n4 - Back\n", NORTH, CENTRAL, SOUTH);
+		printf("1 - North (%lf nis)\n2 - Central (%lf nis)\n3 - South (%lf nis)\n4 - Back\n", NORTH, CENTRAL, SOUTH);
 		scanf("%d", &delivery);
 		if (delivery == 1)
 		{
