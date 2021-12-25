@@ -14,7 +14,7 @@ Cart Add_To_Cart(Product* plist, int slist, Cart clist, int* scart, int sn, int 
 					if (sn == clist.sn[j])
 					{
 						clist.amount[j] += quantity;
-						clist.tp += quantity * plist[i].price;
+						clist.tp += quantity * Get_Price(plist[i]);
 						return clist;
 					}
 				}
@@ -45,7 +45,7 @@ Cart Add_To_Cart(Product* plist, int slist, Cart clist, int* scart, int sn, int 
 				free(clist.amount);
 				clist.sn = newSN;
 				clist.amount = newAmount;
-				clist.tp += plist[i].price * quantity;
+				clist.tp += Get_Price(plist[i]) * quantity;
 				printf("%d of the product: %s, added to your cart\n", quantity, plist[i].name);
 				return clist;
 			}
@@ -82,7 +82,7 @@ void View_cart(Product* plist, int slist, Cart clist, int scart, Client c)
 	}
 }
 
-float ShippingDetails()
+double ShippingDetails()
 {
 	int state;
 	while (TRUE) {
@@ -100,10 +100,17 @@ float ShippingDetails()
 }
 
 //remove product from cart by serial number
-Cart Remove_From_Cart(Cart clist, int* scart, int sn)
+Cart Remove_From_Cart(Cart clist, int* scart, int sn, Product* plist, int psize)
 {
-	(*scart)--;
 	int* newSN, * newAmount;
+	(*scart)--;
+	if (!*scart)
+	{
+		clist.sn = NULL;
+		clist.amount = NULL;
+		clist.tp = 0;
+		return clist;
+	}
 	newSN = (int*)malloc((*scart) * sizeof(int));
 	if (newSN == NULL)
 	{
@@ -121,18 +128,27 @@ Cart Remove_From_Cart(Cart clist, int* scart, int sn)
 	{
 		if (sn == clist.sn[i])
 		{
+			//update tp
+			for (int j = 0; j < psize; j++)
+			{
+				if (sn == plist[j].sn)
+					clist.tp -= (Get_Price(plist[j]) * clist.amount[i]); //adding product list to this func and updated tp after removing product
+			}
 			newSN[i] = clist.sn[*scart];
 			newAmount[i] = clist.amount[*scart];
 		}
-		newSN[i] = clist.sn[i];
-		newAmount[i] = clist.amount[i];
-		//free memory
-		free(clist.sn);
-		free(clist.amount);
-		clist.sn = newSN;
-		clist.amount = newAmount;
-		return clist;
+		else
+		{
+			newSN[i] = clist.sn[i];
+			newAmount[i] = clist.amount[i];
+		}
 	}
+	//free memory
+	free(clist.sn);
+	free(clist.amount);
+	clist.sn = newSN;
+	clist.amount = newAmount;
+	return clist;
 }
 
 //calculating delivery price
@@ -141,7 +157,7 @@ Cart Calculate_Delivery(Cart clist)
 	int delivery, delFLAG = 1;
 	while (delFLAG)
 	{
-		printf("1 - North (%fnis)\n2 - Central (%fnis)\n3 - South (%fnis)\n4 - Back\n", NORTH, CENTRAL, SOUTH);
+		printf("1 - North (%lfnis)\n2 - Central (%lfnis)\n3 - South (%lflnis)\n4 - Back\n", NORTH, CENTRAL, SOUTH);
 		scanf("%d", &delivery);
 		if (delivery == 1)
 		{

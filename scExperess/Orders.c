@@ -15,7 +15,7 @@
 //pSer is initialized at digit 10000, to make a following serial number
 //username is the name of the customer
 //id is the id number of the customer
-orders MakeOrder(ProductFile* listPro, int sizep, int orderSN, char* username, int id, char status, float tp)
+orders MakeOrder(ProductFile* listPro, int sizep, int orderSN, char* username, int id, char status, double tp)
 {
 	orders order;
 	order.username = (char*)malloc((strlen(username) + 1) * sizeof(char));
@@ -43,7 +43,7 @@ orders* Get_All_Waiting_Orders(orders* list, int* size)
 	char* sp, * username, * name;
 	int Osn, sn2, amount, id, size1 = 0;
 	char status;
-	float price, tp;
+	double price, tp;
 	fr = fopen("WaitingOrders.csv", "r");//open file for reading
 	if (fr == NULL)
 	{
@@ -114,10 +114,10 @@ orders* Set_All_Waiting_Orders(orders* list, int size)
 	}
 	for (int i = 0; i < size; i++)
 	{
-		fprintf(fw, "%s,%d,%d,%c,%d,%f,", list[i].username, list[i].id, list[i].serial, list[i].status, list[i].size, list[i].tp);
+		fprintf(fw, "%s,%d,%d,%c,%d,%lf,", list[i].username, list[i].id, list[i].serial, list[i].status, list[i].size, list[i].tp);
 		for (int j = 0; j < list[i].size; j++)//write items list
 		{
-			fprintf(fw, "%s,%d,%d,%f,", list[i].items->name, list[i].items->sn, list[i].items->amount, list[i].items->price);
+			fprintf(fw, "%s,%d,%d,%lf,", list[i].items->name, list[i].items->sn, list[i].items->amount, list[i].items->price);
 		}
 	}
 	fclose(fw);//close file
@@ -233,7 +233,7 @@ orders* Remove_Order(orders* list, int* size, int orderSN)
 }
 
 //pTotalPrice initialized to 0 at first, to start with 0 profit
-int DailyProfit(float* pTotalPrice, float tp)
+int DailyProfit(double* pTotalPrice, double tp)
 {
 	*pTotalPrice += tp;
 	return *pTotalPrice;
@@ -245,10 +245,10 @@ void PrintfProfit(int* pTotalPrice)
 
 }
 
-float ChangeStatus(orders* Allorders, int* size, Product* plist, int psize, int sn)
+double ChangeStatus(orders* Allorders, int* size, Product* plist, int psize, int sn)
 {
 	int i, flag = 1, option;
-	float tp = 0;
+	double tp = 0;
 	//char YN;//Yes and No to approve or cancel
 	//puts("Please enter the customer's id: ");
 	//getchar();

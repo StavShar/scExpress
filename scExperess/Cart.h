@@ -9,13 +9,13 @@ typedef struct
 {
 	int* sn;
 	int* amount;
-	float tp;//total price
+	double tp;//total price
 } Cart;
 
 
 void View_cart(Product* plist, int slist, Cart clist, int scart, Client c);//printing current cart as "product name" - "amount" - "price(amount * product's price)"
-float ShippingDetails();
+double ShippingDetails();
 Cart Add_To_Cart(Product* plist, int slist, Cart clist, int* scart, int sn, int quantity);//adding product's details to cart
-Cart Remove_From_Cart(Cart clist, int* scart, int sn);//remove product from cart by serial number
+Cart Remove_From_Cart(Cart clist, int* scart, int sn, Product* plist, int psize);//remove product from cart by serial number
 Cart Calculate_Delivery(Cart clist);//calculating delivery price
 ProductFile* Checkout(Product* plist, int slist, Cart clist, int scart);//buying all products in cart

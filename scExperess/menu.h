@@ -3,11 +3,11 @@
 
 void mainMenu();
 void printGeneralOptions();//A function that print the menu to screen.
-Manager* ManagerEntranceLoop(Manager* managers, int* size, float* profit, Client* clients, int clients_size);
+Manager* ManagerEntranceLoop(Manager* managers, int* size, double* profit, Client* clients, int clients_size);
 void printManagerEntranceOptions();//A function that print the menu to screen.
 Client* ClientEntranceLoop(Client* clients, int* size);
 void printClientEntranceOptions();//A function that print the menu to screen.
-void ManagerLoop(float* profit, Manager m, Client* clients, int clients_size);
+void ManagerLoop(double* profit, Manager m, Client* clients, int clients_size);
 void printManagerOptions();//A function that print the menu to screen.
 void ClientLoop(Client c);
 void printCartMenu();

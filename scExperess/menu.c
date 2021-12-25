@@ -11,7 +11,7 @@ void mainMenu()
     int managers_size = 0, clients_size = 0;
     int GeneralRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
-    float profit = 0.0;
+    double profit = 0.0;
     managers = get_All_Data_Manager(managers, &managers_size);
     clients = get_All_Data_Client(clients, &clients_size);
     while (GeneralRun)
@@ -50,7 +50,7 @@ void printGeneralOptions()
     printf("----------------------------------------------------------------------\n");
 }//end method printManagerOptions()
 
-Manager* ManagerEntranceLoop(Manager* managers, int* size, float* profit, Client* clients, int clients_size)
+Manager* ManagerEntranceLoop(Manager* managers, int* size, double* profit, Client* clients, int clients_size)
 {
     int ManagerEntranceRun = 1;//do we want another iteration?
     int option;//the choosen option for the menu.
@@ -133,7 +133,7 @@ void printClientEntranceOptions()
     printf("----------------------------------------------------------------------\n");
 }//end method printOptions()
 
-void ManagerLoop(float* profit, Manager m, Client* clients, int clients_size)
+void ManagerLoop(double* profit, Manager m, Client* clients, int clients_size)
 {
     Product* products = NULL;
     orders* Orders = NULL;
@@ -308,14 +308,14 @@ void ClientLoop(Client c)
                 {
                     printf("Enter serial number of product you want to remove from cart: ");
                     scanf("%d", &sn);
-                    cart = Remove_From_Cart(cart, &cart_size, sn);
+                    cart = Remove_From_Cart(cart, &cart_size, sn, products, products_size);
                     printf("Your updated cart is:\n");
                     View_cart(products, products_size, cart, cart_size, c);
                     flag = 0;
                 }
                 else if (option == 2)
                 {
-                    float deliveryCost;
+                    double deliveryCost;
                   
                     if (c.clubMember == 'y')
                         cart.tp *= 0.9;//10% discount
