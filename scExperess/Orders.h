@@ -25,7 +25,7 @@ orders* Set_All_Waiting_Orders(orders* list, int size);
 orders* Add_Order(orders* list, int* size, orders order);
 orders* Remove_Order(orders* list, int* size, int orderSN);
 int DailyProfit(double* pTotalPrice, double tp);
-void PrintfProfit(int* pTotalPrice);
+void PrintfProfit(double pTotalPrice);
 int Get_New_Order_SN();
 orders MakeOrder(ProductFile* listPro, int sizep, int orderSN, char* username, int id, char status, double tp);
 void ViewAllOrders();

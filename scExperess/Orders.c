@@ -239,9 +239,9 @@ int DailyProfit(double* pTotalPrice, double tp)
 	return *pTotalPrice;
 }
 
-void PrintfProfit(int* pTotalPrice)
+void PrintfProfit(double pTotalPrice)
 {
-	printf("The total profit of the day is: %d\n", *pTotalPrice);
+	printf("The total profit of the day is: %.2lf\n", pTotalPrice);
 
 }
 
@@ -280,9 +280,7 @@ double ChangeStatus(orders* Allorders, int* size, Product* plist, int psize, int
 					printf("Order denied successfuly\n");
 				}
 				else if (option == 3)
-				{
-					flag = 0;
-				}
+					return tp;//back to menu
 				else
 					printf("wrong input, please try again\n");
 			} while (flag);

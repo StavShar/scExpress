@@ -188,7 +188,7 @@ void ManagerLoop(double* profit, Manager m, Client* clients, int clients_size)
             Discount_Product(products, products_size, sn);
             break;
         case 9:
-            PrintfProfit(profit);
+            PrintfProfit(*profit);
             break;
         case 10:
             flag = 1;
