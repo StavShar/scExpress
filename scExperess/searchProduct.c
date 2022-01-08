@@ -50,8 +50,13 @@ int Serial_num_search(Product* list, int size, int num)
 //printing the average rating
 void Print_Rating(int total_rate, int rating_count)
 {
-    double temp = ((double)total_rate / (double)rating_count);
-    printf("The average rating of our site is: %.1f\n", temp);
+    if (rating_count)
+    {
+        double temp = ((double)total_rate / (double)rating_count);
+        printf("The average rating of our site is: %.1f\n", temp);
+    }
+    else
+        printf("No one rate the site yet\n");
 }
 
 void Website_ranking(int* total, int* count)
