@@ -87,7 +87,7 @@ double ShippingDetails()
 {
 	int state;
 	while (TRUE) {
-		printf("Choose your state:\n1-North\n2-Central\n3-South\n");
+		printf("Choose your state:\n1-North: %.2f nis\n2-Central: %.2f nis\n3-South: %.2f nis\n", NORTH, CENTRAL, SOUTH);
 		scanf("%d", &state);
 		if (state == 1)
 			return NORTH;
