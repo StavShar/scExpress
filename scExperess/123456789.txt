@@ -1,0 +1,8 @@
+ORDER NUMBER:  10
+Client's name:  guy
+Client's ID:  123456789
+Order status: Approved
+Serial number - Product - Amount - Price
+0 - mango - 2 - 160.00
+Total: 190.00
+

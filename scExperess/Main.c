@@ -17,3 +17,5 @@ id: 123123123
 user: member
 pass: 12345
 */
+
+// change price, daily profit, block client, rating

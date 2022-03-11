@@ -1,0 +1,24 @@
+ORDER NUMBER:  9
+Client's name:  guy
+Client's ID:  123456789
+Order status: Approved
+Serial number - Product - Amount - Price
+0 - mango - 2 - 100.00
+Total: 130.00
+
+ORDER NUMBER:  10
+Client's name:  guy
+Client's ID:  123456789
+Order status: Approved
+Serial number - Product - Amount - Price
+0 - mango - 2 - 160.00
+Total: 190.00
+
+ORDER NUMBER:  11
+Client's name:  member
+Client's ID:  123123123
+Order status: Approved
+Serial number - Product - Amount - Price
+1 - melon - 3 - 13.20
+Total: 28.20
+
